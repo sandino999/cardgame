@@ -41,3 +41,4 @@
 2012-10-02 02:15:01 --- ERROR: ErrorException [ 1 ]: Class 'Model_card' not found ~ SYSPATH\classes\kohana\model.php [ 26 ]
 2012-10-02 02:15:38 --- ERROR: ErrorException [ 1 ]: Class 'Model_card' not found ~ SYSPATH\classes\kohana\model.php [ 26 ]
 2012-10-02 02:15:42 --- ERROR: ErrorException [ 1 ]: Class 'Model_card' not found ~ SYSPATH\classes\kohana\model.php [ 26 ]
+2012-10-02 02:42:58 --- ERROR: ErrorException [ 1 ]: Class 'Model_card' not found ~ SYSPATH\classes\kohana\model.php [ 26 ]

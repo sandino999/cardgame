@@ -34,4 +34,5 @@ class Controller_MyCardList extends Controller {
 		$this->response->body($view);  	
 	}
 
+	
 } 

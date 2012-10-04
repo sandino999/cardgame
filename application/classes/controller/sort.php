@@ -1,6 +1,14 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
 class Controller_Sort extends Controller {
+	
+	public function __construct(Request $request,Response $response)
+	{
+		parent::__construct($request,$response);
+		$this->model = model::factory('cards');
+		$this->view = view::factory('cardview');
+		$this->id = session::instance()->get('id',NULL);
+	}
 
 	public function action_index()
 	{
@@ -28,46 +36,47 @@ class Controller_Sort extends Controller {
 		  }
 		  
 		}
+		else
+		{
+		  $this->action_default();
+		}
 	}
 	
 	public function action_default()
 	{
-	   $card_list = Model::factory('Model')->get_list();
-		$view = View::factory('view')
-			  ->bind('card_list',$card_list);
-		$this->response->body($view);
+	   $card_list = $this->model->get_list($this->id);
+	   $view = $this->view->bind('card_list',$card_list);
+	   $this->response->body($this->view);
+	  
+	  
 	}
 	
 	public function str_ascending()
 	{
-	  $card_list = Model::factory('Model')->str_ascending();
-	  $view = View::factory('view')
-	          ->bind('card_list',$card_list);
-		$this->response->body($view);
+	  $card_list = $this->model->str_ascending($this->id);
+	  $this->view->bind('card_list',$card_list);
+	  $this->response->body($this->view);
 	}
 	
 	public function str_descending()
 	{
-	  $card_list = Model::factory('Model')->str_descending();
-	  $view = View::factory('view')
-	          ->bind('card_list',$card_list);
-		$this->response->body($view);
+	  $card_list = $this->model->str_descending($this->id);
+	  $this->view->bind('card_list',$card_list);
+	  $this->response->body($this->view);
 	}
 	
 	public function def_ascending()
 	{
-	  $card_list = Model::factory('Model')->def_ascending();
-	  $view = View::factory('view')
-	          ->bind('card_list',$card_list);
-		$this->response->body($view);
+	  $card_list = $this->model->def_ascending($this->id);
+	  $this->view->bind('card_list',$card_list);
+	  $this->response->body($this->view);
 	}
 	
 	public function def_descending()
 	{
-	  $card_list = Model::factory('Model')->def_descending();
-	  $view = View::factory('view')
-	          ->bind('card_list',$card_list);
-		$this->response->body($view);
+	  $card_list = $this->model->def_descending($this->id);
+	  $this->view->bind('card_list',$card_list);
+       $this->response->body($this->view);
 	}
 
 } 

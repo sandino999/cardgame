@@ -45,7 +45,7 @@ spl_autoload_register(array('Kohana', 'auto_load'));
  *
  * @see  http://php.net/spl_autoload_call
  * @see  http://php.net/manual/var.configuration.php#unserialize-callback-func
- */
+ 
 ini_set('unserialize_callback_func', 'spl_autoload_call');
 
 // -- Configuration and initialization -----------------------------------------
@@ -103,6 +103,7 @@ Kohana::modules(array(
 	 'database'   => MODPATH.'database',   // Database access
 	// 'image'      => MODPATH.'image',      // Image manipulation
 	 'orm'        => MODPATH.'orm',        // Object Relationship Mapping
+	 'kohana-email'  => MODPATH.'kohana-email',   // Kohana email module
 	// 'unittest'   => MODPATH.'unittest',   // Unit testing
 	// 'userguide'  => MODPATH.'userguide',  // User guide and API documentation
 	));

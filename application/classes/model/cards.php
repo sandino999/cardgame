@@ -18,7 +18,9 @@ class Model_cards extends Model_Database {
 	}
 	
 	public function check_card_owning($id)
-	{	  
+	{
+	  $results = db::select()->from('card_owning')->execute();
+	  
 	  foreach($results as $check)
 	  {
 	    if($check['account_owning_id']==$id)
@@ -75,10 +77,12 @@ class Model_cards extends Model_Database {
 	
 	public function register($fname,$mname,$lname,$user,$pass,$retype,$secret,$ans,$contact,$addr,$email)
 	{
+	 
 		$usernamedb = $this->check_user_name_if_exists($user);  // function for checking if username exists
-				
+		$maildb = $this->check_if_email_exists($email);  // function for checking if email already exists
+		
 		if($fname == '' OR $mname =='' OR $lname == '' OR $user == '' OR $pass == '' OR $retype == '' 
-		OR $secret  == '' OR $ans  == '' OR $contact  = '' OR $addr  = '' OR $email == '')  // if fields are missing
+		OR $secret  == '' OR $ans  == '' OR $contact  == '' OR $addr  == '' OR $email == '')  // if fields are missing
 		{	
 		?>
 			<script>
@@ -96,7 +100,7 @@ class Model_cards extends Model_Database {
 		<?php
 			return false;
 		}
-		else if($usernamedb == $user)   //check if username exists
+		else if($usernamedb == true)   //check if username exists
 		{
 		?>
 			<script>
@@ -105,6 +109,16 @@ class Model_cards extends Model_Database {
 		<?php
 			return false;
 		}
+		else if($maildb == true)
+		{
+		?>
+			<script>
+				alert('email already exists in the database');
+			</script>
+		<?php
+			return false;
+		}
+	
 		else
 		{
 			?>
@@ -115,8 +129,9 @@ class Model_cards extends Model_Database {
 			if(answer)
 			{
 			<?php
-				DB::insert('accounts',array('username','password','firstname','middlename','surname','contact_no','address','email'))
-				->values(array($user,$pass,$fname,$mname,$lname,$contact,$addr,$email))->execute();
+			
+				DB::insert('accounts',array('username','password','secret_question','answer','firstname','middlename','surname','contact_no','address','email'))
+				->values(array($user,$pass,$secret,$ans,$fname,$mname,$lname,$contact,$addr,$email))->execute();
 			?>
 			alert('Record Added');
 			window.location='/cards/index.php/MyCardList';
@@ -138,7 +153,7 @@ class Model_cards extends Model_Database {
 	  {
 	    if($row['username']==$user)
 		{
-		  return $row['username'];
+		  return true;
 		}		
 	  }  
 	}
@@ -146,23 +161,27 @@ class Model_cards extends Model_Database {
 	public function login($username,$passwd)
 	{
 		
-		if($username == ' ' OR $passwd == ' ')
+		if($username == '' OR $passwd == '')   // check if username and password is blank
 		{
 		  ?>
 			<script>
-				alert('Fill in missing fields');
+				alert('Fill in missing fields');  
 			</script>
 		  <?php
 		  return false;
 		}
 		
-		
 		$query=db::select('*')->from('accounts')->execute();
 		
 		foreach($query as $result)
 		{
-		   if($username==$result['username'] AND $passwd==$result['password'])
-		   {			   
+		   if($username==$result['username'] AND $passwd==$result['password'])   // check if username and password match
+		   {	
+			?>
+				<script>	
+					alert('You are now logged on');
+				</script>
+			<?php
 			   return $result['account_id'];	
 		   }
 		   
@@ -176,12 +195,10 @@ class Model_cards extends Model_Database {
 		
 	}
 	
-	public function recover($to)
+	public function send_password($email)
 	{
-		if(valid::email($to))
-		{
-		  //$mail = email::factory()->subject('Email subject')
-		  //->to($email)->from('no-reply@email.com','MyName')->message('hello')->send();
+	//	  $mail = email::factory()->subject('Email subject')
+	//	  ->to($email)->from('no-reply@email.com','MyName')->message('hello')->send();
 		  
 		 // $mailer = email::connect();
 		 
@@ -193,19 +210,42 @@ class Model_cards extends Model_Database {
 		//	$subject = ' : Message to Leet Street';
 		//	$from = array('Clarence', 'ratnaraju.java@gmail.com');
 		//	email::send($email, $from , $subject, 'hi how r u Brother ');
-	
 			
-		 
-		}
-		else
+	}
+	
+	public function check_if_email_exists($email)
+	{
+	  $query = db::select()->from('accounts')->execute(); 
+	  foreach($query as $row)
+	  {
+		if($row['email'] == $email)
 		{
-		  ?>
-		  <script>
-			alert('Not a valid email');
-		    window.location='/cards/index.php/recover';
-		  </script>	  
-		  <?php
+		   return true;
+		} 
+	  }
+	}
+	
+	public function get_secret_question($email)
+	{
+      $query=db::select('*','question_name')->from('accounts')->join('secret_question')
+	  ->on('accounts.secret_question','=','secret_question.question_id')->where('email','=',$email)->execute();
+	  return $query; 
+	}
+	
+	public function confirm_secret_question_ans($ans,$email)
+	{
+		$query = db::select()->from('accounts')->where('email','=',$email)->execute();
+		
+		foreach($query as $row)
+		{
+			if($row['answer']== $ans)
+			{ 
+
+			  return true;
+			}
 		}
+		
+		return false;
 	}
 
 } 

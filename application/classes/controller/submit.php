@@ -29,7 +29,7 @@ class Controller_Submit extends Controller {
 			$contact=$_POST['txtcontact'];
 			$addr=$_POST['txtaddr'];
 			$email=$_POST['txtemail'];
-		  	
+			
 			$return = $this->model->register($fname,$mname,$lname,$user,$pass,$retype,$secret,$ans,$contact,$addr,$email);
 		    if($return == false)
 			{
@@ -43,16 +43,17 @@ class Controller_Submit extends Controller {
 		   $user=$_POST['txtuser'];
 		   $pass=$_POST['txtpass'];
 		   
-		   $id=$this->model->login($user,$pass);
+		   $id = $this->model->login($user,$pass);
 		   
-		   if($id==false)
-		   {
-		     $this->response->body($this->login);
-		   }
-		   
-		   session::instance()->set('id',$id);		  		   
-		  
-			$this->check_owning($id);	   
+			if($id == false)
+			{
+				$this->response->body($this->login);
+			}
+			else
+			{
+				session::instance()->set('id',$id);		  		   
+				$this->check_owning($id);
+			}
 		}
 		elseif(isset($_POST['btnbuy']))
 		{
@@ -75,8 +76,10 @@ class Controller_Submit extends Controller {
 		$card_owning = $this->model->check_card_owning($id);
 		
 		if($card_owning==true)
-		{  
-		  $this->request->redirect('index.php/sort');
+		{
+		  $initial_display = $this->model->get_list($id);
+		  $view = $this->view->bind('card_list',$initial_display);
+		  $this->response->body($this->view);
 		}
 		else
 		{

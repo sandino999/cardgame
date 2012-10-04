@@ -145,13 +145,24 @@ class Model_cards extends Model_Database {
 	
 	public function login($username,$passwd)
 	{
+		
+		if($username == ' ' OR $passwd == ' ')
+		{
+		  ?>
+			<script>
+				alert('Fill in missing fields');
+			</script>
+		  <?php
+		  return false;
+		}
+		
+		
 		$query=db::select('*')->from('accounts')->execute();
 		
 		foreach($query as $result)
 		{
 		   if($username==$result['username'] AND $passwd==$result['password'])
 		   {			   
-				
 			   return $result['account_id'];	
 		   }
 		   

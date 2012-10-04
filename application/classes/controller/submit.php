@@ -11,6 +11,7 @@ class Controller_Submit extends Controller {
 		$this->nocards = view::factory('nocards');
 		$this->buy = view::factory('buy');
 		$this->regview = view::factory('registerview');
+		$this->login = view::factory('login');
 	}
 	
 	public function action_index()
@@ -43,9 +44,15 @@ class Controller_Submit extends Controller {
 		   $pass=$_POST['txtpass'];
 		   
 		   $id=$this->model->login($user,$pass);
+		   
+		   if($id==false)
+		   {
+		     $this->response->body($this->login);
+		   }
+		   
 		   session::instance()->set('id',$id);		  		   
 		  
-			  $this->check_owning($id);	   
+			$this->check_owning($id);	   
 		}
 		elseif(isset($_POST['btnbuy']))
 		{

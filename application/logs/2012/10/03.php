@@ -155,3 +155,7 @@
 2012-10-03 23:02:39 --- ERROR: ErrorException [ 4 ]: syntax error, unexpected T_ELSE ~ APPPATH\classes\model\cards.php [ 90 ]
 2012-10-03 23:06:25 --- ERROR: ErrorException [ 4 ]: syntax error, unexpected '(', expecting T_STRING or T_VARIABLE or '{' or '$' ~ APPPATH\classes\model\cards.php [ 78 ]
 2012-10-03 23:11:26 --- ERROR: ErrorException [ 1 ]: Call to undefined method Model_cards::check_username_if_exists() ~ APPPATH\classes\model\cards.php [ 78 ]
+2012-10-03 23:19:11 --- ERROR: ErrorException [ 8 ]: Undefined variable: results ~ APPPATH\classes\model\cards.php [ 22 ]
+2012-10-03 23:23:25 --- ERROR: ErrorException [ 4 ]: syntax error, unexpected '}' ~ APPPATH\classes\controller\submit.php [ 50 ]
+2012-10-03 23:23:37 --- ERROR: ErrorException [ 4 ]: syntax error, unexpected ' ~ APPPATH\classes\model\cards.php [ 151 ]
+2012-10-03 23:23:37 --- ERROR: ErrorException [ 4 ]: syntax error, unexpected ' ~ APPPATH\classes\model\cards.php [ 151 ]

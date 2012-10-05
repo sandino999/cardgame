@@ -1,91 +1,100 @@
 <?php
 
 /*
- * This file is part of SwiftMailer.
- * (c) 2004-2009 Chris Corbyn
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ CharacterStream implementation using an array in Swift Mailer.
+
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
  */
 
 /**
  * A CharacterStream implementation which stores characters in an internal array.
- *
- * @package    Swift
+ * @package Swift
  * @subpackage CharacterStream
- * @author     Xavier De Cock <xdecock@gmail.com>
+ * @author Xavier De Cock <xdecock@gmail.com>
  */
 
 class Swift_CharacterStream_NgCharacterStream implements Swift_CharacterStream
 {
     /**
      * The char reader (lazy-loaded) for the current charset.
-     *
      * @var Swift_CharacterReader
+     * @access private
      */
     private $_charReader;
 
     /**
-     * A factory for creating CharacterReader instances.
-     *
+     * A factory for creatiing CharacterReader instances.
      * @var Swift_CharacterReaderFactory
+     * @access private
      */
     private $_charReaderFactory;
 
     /**
      * The character set this stream is using.
-     *
      * @var string
+     * @access private
      */
     private $_charset;
 
     /**
-     * The data's stored as-is.
+     * The datas stored as is
      *
      * @var string
      */
-    private $_datas = '';
+    private $_datas = "";
 
     /**
      * Number of bytes in the stream
      *
-     * @var integer
+     * @var int
      */
     private $_datasSize = 0;
 
     /**
-     * Map.
+     * Map
      *
      * @var mixed
      */
     private $_map;
 
     /**
-     * Map Type.
+     * Map Type
      *
-     * @var integer
+     * @var int
      */
     private $_mapType = 0;
 
     /**
-     * Number of characters in the stream.
+     * Number of characters in the stream
      *
-     * @var integer
+     * @var int
      */
     private $_charCount = 0;
 
     /**
-     * Position in the stream.
+     * Position in the stream
      *
-     * @var integer
+     * @var unknown_type
      */
     private $_currentPos = 0;
 
     /**
-     * Constructor.
+     * The constructor
      *
      * @param Swift_CharacterReaderFactory $factory
-     * @param string                       $charset
+     * @param unknown_type                 $charset
      */
     public function __construct(Swift_CharacterReaderFactory $factory, $charset)
     {
@@ -97,7 +106,6 @@ class Swift_CharacterStream_NgCharacterStream implements Swift_CharacterStream
 
     /**
      * Set the character set used in this CharacterStream.
-     *
      * @param string $charset
      */
     public function setCharacterSet($charset)
@@ -109,7 +117,6 @@ class Swift_CharacterStream_NgCharacterStream implements Swift_CharacterStream
 
     /**
      * Set the CharacterReaderFactory for multi charset support.
-     *
      * @param Swift_CharacterReaderFactory $factory
      */
     public function setCharacterReaderFactory(Swift_CharacterReaderFactory $factory)
@@ -119,6 +126,7 @@ class Swift_CharacterStream_NgCharacterStream implements Swift_CharacterStream
 
     /**
      * @see Swift_CharacterStream::flushContents()
+     *
      */
     public function flushContents()
     {
@@ -157,8 +165,7 @@ class Swift_CharacterStream_NgCharacterStream implements Swift_CharacterStream
     /**
      * @see Swift_CharacterStream::read()
      *
-     * @param integer $length
-     *
+     * @param  int    $length
      * @return string
      */
     public function read($length)
@@ -223,9 +230,8 @@ class Swift_CharacterStream_NgCharacterStream implements Swift_CharacterStream
     /**
      * @see Swift_CharacterStream::readBytes()
      *
-     * @param integer $length
-     *
-     * @return integer[]
+     * @param  int   $length
+     * @return int[]
      */
     public function readBytes($length)
     {
@@ -242,7 +248,7 @@ class Swift_CharacterStream_NgCharacterStream implements Swift_CharacterStream
     /**
      * @see Swift_CharacterStream::setPointer()
      *
-     * @param integer $charOffset
+     * @param int $charOffset
      */
     public function setPointer($charOffset)
     {

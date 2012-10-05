@@ -10,24 +10,23 @@
 
 /**
  * Standard factory for creating CharacterReaders.
- *
- * @package    Swift
+ * @package Swift
  * @subpackage Encoder
- * @author     Chris Corbyn
+ * @author Chris Corbyn
  */
 class Swift_CharacterReaderFactory_SimpleCharacterReaderFactory implements Swift_CharacterReaderFactory
 {
     /**
      * A map of charset patterns to their implementation classes.
-     *
      * @var array
+     * @access private
      */
     private static $_map = array();
 
     /**
      * Factories which have already been loaded.
-     *
      * @var Swift_CharacterReaderFactory[]
+     * @access private
      */
     private static $_loaded = array();
 
@@ -98,9 +97,7 @@ class Swift_CharacterReaderFactory_SimpleCharacterReaderFactory implements Swift
 
     /**
      * Returns a CharacterReader suitable for the charset applied.
-     *
-     * @param string $charset
-     *
+     * @param  string                $charset
      * @return Swift_CharacterReader
      */
     public function getReaderFor($charset)

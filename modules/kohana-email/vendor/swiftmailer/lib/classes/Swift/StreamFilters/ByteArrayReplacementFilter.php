@@ -10,11 +10,9 @@
 
 /**
  * Processes bytes as they pass through a buffer and replaces sequences in it.
- *
  * This stream filter deals with Byte arrays rather than simple strings.
- *
  * @package Swift
- * @author  Chris Corbyn
+ * @author Chris Corbyn
  */
 class Swift_StreamFilters_ByteArrayReplacementFilter implements Swift_StreamFilter
 {
@@ -37,7 +35,6 @@ class Swift_StreamFilters_ByteArrayReplacementFilter implements Swift_StreamFilt
 
     /**
      * Create a new ByteArrayReplacementFilter with $search and $replace.
-     *
      * @param array $search
      * @param array $replace
      */
@@ -97,9 +94,7 @@ class Swift_StreamFilters_ByteArrayReplacementFilter implements Swift_StreamFilt
 
     /**
      * Returns true if based on the buffer passed more bytes should be buffered.
-     *
-     * @param array $buffer
-     *
+     * @param  array   $buffer
      * @return boolean
      */
     public function shouldBuffer($buffer)
@@ -111,10 +106,7 @@ class Swift_StreamFilters_ByteArrayReplacementFilter implements Swift_StreamFilt
 
     /**
      * Perform the actual replacements on $buffer and return the result.
-     *
-     * @param array   $buffer
-     * @param integer $_minReplaces
-     *
+     * @param  array $buffer
      * @return array
      */
     public function filter($buffer, $_minReplaces = -1)

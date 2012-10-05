@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
-echo '<h1> Secret Question </h1>';
+echo '<h1> Confirm Secret Question </h1>';
 
 
 foreach($secret as $row)

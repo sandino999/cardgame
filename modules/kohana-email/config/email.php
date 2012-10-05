@@ -1,4 +1,5 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
+
 return array(
 	/**
 	 * SwiftMailer driver, used with the email module.
@@ -7,15 +8,14 @@ return array(
 	 */
 	'driver' => 'smtp',
 	
-	
-	'transport'	=> 'smtp',
-	'options'	=> array
-					(
-						'hostname'	=> 'thewebapp.com',
-						'username'	=> 'mailer@thewebapp.com',
-						'password'	=> 'p@ssw0rd',
-						'port'		=> '25',
-					),
+    'options'   => array(
+        'hostname'       => 'smtp.gmail.com',
+        'port'       => 465,
+        'timeout'    => 10,
+        'encryption' => 'ssl',
+        'username'   => 'sandino.dolosa@beenest-tech.com',
+        'password'   => 'luna1700',
+    ),
 
 	
 	/**
@@ -36,5 +36,5 @@ return array(
 	 * @param   string  sendmail: executable path, with -bs or equivalent attached
 	 * @param   array   smtp: hostname, (username), (password), (port), (encryption)
 	 */
-	'options' => array
+	//'options'=>NULL
 );

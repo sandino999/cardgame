@@ -10,18 +10,15 @@
 
 /**
  * The Message class for building emails.
- *
- * @package    Swift
+ * @package Swift
  * @subpackage Mime
- * @author     Chris Corbyn
+ * @author Chris Corbyn
  */
 class Swift_Message extends Swift_Mime_SimpleMessage
 {
     /**
      * Create a new Message.
-     *
      * Details may be optionally passed into the constructor.
-     *
      * @param string $subject
      * @param string $body
      * @param string $contentType
@@ -49,12 +46,10 @@ class Swift_Message extends Swift_Mime_SimpleMessage
 
     /**
      * Create a new Message.
-     *
-     * @param string $subject
-     * @param string $body
-     * @param string $contentType
-     * @param string $charset
-     *
+     * @param  string             $subject
+     * @param  string             $body
+     * @param  string             $contentType
+     * @param  string             $charset
      * @return Swift_Mime_Message
      */
     public static function newInstance($subject = null, $body = null, $contentType = null, $charset = null)
@@ -64,12 +59,9 @@ class Swift_Message extends Swift_Mime_SimpleMessage
 
     /**
      * Add a MimePart to this Message.
-     *
      * @param string|Swift_OutputByteStream $body
      * @param string                        $contentType
      * @param string                        $charset
-     *
-     * @return Swift_Mime_SimpleMessage
      */
     public function addPart($body, $contentType = null, $charset = null)
     {

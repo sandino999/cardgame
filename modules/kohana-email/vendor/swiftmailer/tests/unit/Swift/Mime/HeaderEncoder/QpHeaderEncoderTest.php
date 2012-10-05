@@ -155,7 +155,8 @@ class Swift_Mime_HeaderEncoder_QpHeaderEncoderTest
                 $this->assertEqual($char, $encodedChar,
                     '%s: Character ' . $char . ' should not be encoded.'
                     );
-            } elseif (0x20 == $byte) //Special case
+            }
+            elseif (0x20 == $byte) //Special case
             {
                 $this->assertEqual('_', $encodedChar,
                     '%s: Space character should be replaced.'

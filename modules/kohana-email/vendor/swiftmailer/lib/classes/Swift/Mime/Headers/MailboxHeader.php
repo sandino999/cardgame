@@ -10,23 +10,21 @@
 
 /**
  * A Mailbox Address MIME Header for something like From or Sender.
- *
- * @package    Swift
+ * @package Swift
  * @subpackage Mime
- * @author     Chris Corbyn
+ * @author Chris Corbyn
  */
 class Swift_Mime_Headers_MailboxHeader extends Swift_Mime_Headers_AbstractHeader
 {
     /**
      * The mailboxes used in this Header.
-     *
      * @var string[]
+     * @access private
      */
     private $_mailboxes = array();
 
     /**
      * Creates a new MailboxHeader with $name.
-     *
      * @param string                   $name    of Header
      * @param Swift_Mime_HeaderEncoder $encoder
      * @param Swift_Mime_Grammar       $grammar
@@ -40,11 +38,9 @@ class Swift_Mime_Headers_MailboxHeader extends Swift_Mime_Headers_AbstractHeader
 
     /**
      * Get the type of Header that this instance represents.
-     *
+     * @return int
      * @see TYPE_TEXT, TYPE_PARAMETERIZED, TYPE_MAILBOX
      * @see TYPE_DATE, TYPE_ID, TYPE_PATH
-     *
-     * @return int
      */
     public function getFieldType()
     {
@@ -53,11 +49,8 @@ class Swift_Mime_Headers_MailboxHeader extends Swift_Mime_Headers_AbstractHeader
 
     /**
      * Set the model for the field body.
-     *
      * This method takes a string, or an array of addresses.
-     *
-     * @param mixed $model
-     *
+     * @param  mixed                        $model
      * @throws Swift_RfcComplianceException
      */
     public function setFieldBodyModel($model)
@@ -67,11 +60,8 @@ class Swift_Mime_Headers_MailboxHeader extends Swift_Mime_Headers_AbstractHeader
 
     /**
      * Get the model for the field body.
-     *
      * This method returns an associative array like {@link getNameAddresses()}
-     *
      * @return array
-     *
      * @throws Swift_RfcComplianceException
      */
     public function getFieldBodyModel()
@@ -81,7 +71,6 @@ class Swift_Mime_Headers_MailboxHeader extends Swift_Mime_Headers_AbstractHeader
 
     /**
      * Set a list of mailboxes to be shown in this Header.
-     *
      * The mailboxes can be a simple array of addresses, or an array of
      * key=>value pairs where (email => personalName).
      * Example:
@@ -94,14 +83,11 @@ class Swift_Mime_Headers_MailboxHeader extends Swift_Mime_Headers_AbstractHeader
      *  ));
      * ?>
      * </code>
-     *
+     * @param  string|string[]              $mailboxes
+     * @throws Swift_RfcComplianceException
      * @see __construct()
      * @see setAddresses()
      * @see setValue()
-     *
-     * @param string|string[] $mailboxes
-     *
-     * @throws Swift_RfcComplianceException
      */
     public function setNameAddresses($mailboxes)
     {
@@ -111,7 +97,6 @@ class Swift_Mime_Headers_MailboxHeader extends Swift_Mime_Headers_AbstractHeader
 
     /**
      * Get the full mailbox list of this Header as an array of valid RFC 2822 strings.
-     *
      * Example:
      * <code>
      * <?php
@@ -126,13 +111,10 @@ class Swift_Mime_Headers_MailboxHeader extends Swift_Mime_Headers_AbstractHeader
      * // )
      * ?>
      * </code>
-     *
+     * @return string[]
+     * @throws Swift_RfcComplianceException
      * @see getNameAddresses()
      * @see toString()
-     *
-     * @return string[]
-     *
-     * @throws Swift_RfcComplianceException
      */
     public function getNameAddressStrings()
     {
@@ -141,7 +123,6 @@ class Swift_Mime_Headers_MailboxHeader extends Swift_Mime_Headers_AbstractHeader
 
     /**
      * Get all mailboxes in this Header as key=>value pairs.
-     *
      * The key is the address and the value is the name (or null if none set).
      * Example:
      * <code>
@@ -157,11 +138,9 @@ class Swift_Mime_Headers_MailboxHeader extends Swift_Mime_Headers_AbstractHeader
      * // )
      * ?>
      * </code>
-     *
+     * @return string[]
      * @see getAddresses()
      * @see getNameAddressStrings()
-     *
-     * @return string[]
      */
     public function getNameAddresses()
     {
@@ -170,7 +149,6 @@ class Swift_Mime_Headers_MailboxHeader extends Swift_Mime_Headers_AbstractHeader
 
     /**
      * Makes this Header represent a list of plain email addresses with no names.
-     *
      * Example:
      * <code>
      * <?php
@@ -180,13 +158,10 @@ class Swift_Mime_Headers_MailboxHeader extends Swift_Mime_Headers_AbstractHeader
      *  );
      * ?>
      * </code>
-     *
+     * @param  string[]                     $addresses
+     * @throws Swift_RfcComplianceException
      * @see setNameAddresses()
      * @see setValue()
-     *
-     * @param string[] $addresses
-     *
-     * @throws Swift_RfcComplianceException
      */
     public function setAddresses($addresses)
     {
@@ -195,10 +170,8 @@ class Swift_Mime_Headers_MailboxHeader extends Swift_Mime_Headers_AbstractHeader
 
     /**
      * Get all email addresses in this Header.
-     *
-     * @see getNameAddresses()
-     *
      * @return string[]
+     * @see getNameAddresses()
      */
     public function getAddresses()
     {
@@ -207,7 +180,6 @@ class Swift_Mime_Headers_MailboxHeader extends Swift_Mime_Headers_AbstractHeader
 
     /**
      * Remove one or more addresses from this Header.
-     *
      * @param string|string[] $addresses
      */
     public function removeAddresses($addresses)
@@ -220,15 +192,11 @@ class Swift_Mime_Headers_MailboxHeader extends Swift_Mime_Headers_AbstractHeader
 
     /**
      * Get the string value of the body in this Header.
-     *
      * This is not necessarily RFC 2822 compliant since folding white space will
      * not be added at this stage (see {@link toString()} for that).
-     *
-     * @see toString()
-     *
      * @return string
-     *
      * @throws Swift_RfcComplianceException
+     * @see toString()
      */
     public function getFieldBody()
     {
@@ -244,10 +212,9 @@ class Swift_Mime_Headers_MailboxHeader extends Swift_Mime_Headers_AbstractHeader
 
     /**
      * Normalizes a user-input list of mailboxes into consistent key=>value pairs.
-     *
-     * @param string[] $mailboxes
-     *
+     * @param  string[] $mailboxes
      * @return string[]
+     * @access protected
      */
     protected function normalizeMailboxes(array $mailboxes)
     {
@@ -270,11 +237,10 @@ class Swift_Mime_Headers_MailboxHeader extends Swift_Mime_Headers_AbstractHeader
 
     /**
      * Produces a compliant, formatted display-name based on the string given.
-     *
-     * @param string  $displayName as displayed
-     * @param boolean $shorten     the first line to make remove for header name
-     *
+     * @param  string  $displayName as displayed
+     * @param  boolean $shorten     the first line to make remove for header name
      * @return string
+     * @access protected
      */
     protected function createDisplayNameString($displayName, $shorten = false)
     {
@@ -285,12 +251,10 @@ class Swift_Mime_Headers_MailboxHeader extends Swift_Mime_Headers_AbstractHeader
 
     /**
      * Creates a string form of all the mailboxes in the passed array.
-     *
-     * @param string[] $mailboxes
-     *
+     * @param  string[]                     $mailboxes
      * @return string
-     *
      * @throws Swift_RfcComplianceException
+     * @access protected
      */
     protected function createMailboxListString(array $mailboxes)
     {
@@ -298,13 +262,9 @@ class Swift_Mime_Headers_MailboxHeader extends Swift_Mime_Headers_AbstractHeader
     }
 
     /**
-     * Redefine the encoding requirements for mailboxes.
-     *
-     * Commas and semicolons are used to separate
+     * Redefine the encoding requirements for mailboxes. Commas and semicolons are used to separate
      * multiple addresses, and should therefore be encoded
-     *
-     * @param string $token
-     *
+     * @param  string  $token
      * @return boolean
      */
     protected function tokenNeedsEncoding($token)
@@ -316,10 +276,9 @@ class Swift_Mime_Headers_MailboxHeader extends Swift_Mime_Headers_AbstractHeader
 
     /**
      * Return an array of strings conforming the the name-addr spec of RFC 2822.
-     *
-     * @param string[] $mailboxes
-     *
+     * @param  string[] $mailboxes
      * @return string[]
+     * @access private
      */
     private function _createNameAddressStrings(array $mailboxes)
     {
@@ -339,10 +298,9 @@ class Swift_Mime_Headers_MailboxHeader extends Swift_Mime_Headers_AbstractHeader
 
     /**
      * Throws an Exception if the address passed does not comply with RFC 2822.
-     *
-     * @param string $address
-     *
+     * @param  string                       $address
      * @throws Swift_RfcComplianceException If invalid.
+     * @access private
      */
     private function _assertValidAddress($address)
     {

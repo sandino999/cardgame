@@ -10,22 +10,18 @@
 
 /**
  * Analyzes US-ASCII characters.
- *
- * @package    Swift
+ * @package Swift
  * @subpackage Encoder
- * @author     Chris Corbyn
+ * @author Chris Corbyn
  */
 class Swift_CharacterReader_UsAsciiReader implements Swift_CharacterReader
 {
     /**
-     * Returns the complete character map.
+     * Returns the complete charactermap
      *
-     * @param string  $string
-     * @param integer $startOffset
-     * @param array   $currentMap
-     * @param string  $ignoredChars
-     *
-     * @return integer
+     * @param string $string
+     * @param int    $startOffset
+     * @param string $ignoredChars
      */
     public function getCharPositions($string, $startOffset, &$currentMap, &$ignoredChars)
     {
@@ -42,8 +38,7 @@ class Swift_CharacterReader_UsAsciiReader implements Swift_CharacterReader
 
     /**
      * Returns mapType
-     *
-     * @return integer mapType
+     * @return int mapType
      */
     public function getMapType()
     {
@@ -52,16 +47,12 @@ class Swift_CharacterReader_UsAsciiReader implements Swift_CharacterReader
 
     /**
      * Returns an integer which specifies how many more bytes to read.
-     *
      * A positive integer indicates the number of more bytes to fetch before invoking
      * this method again.
      * A value of zero means this is already a valid character.
      * A value of -1 means this cannot possibly be a valid character.
-     *
-     * @param string  $bytes
-     * @param integer $size
-     *
-     * @return integer
+     * @param  string $bytes
+     * @return int
      */
     public function validateByteSequence($bytes, $size)
     {
@@ -75,8 +66,7 @@ class Swift_CharacterReader_UsAsciiReader implements Swift_CharacterReader
 
     /**
      * Returns the number of bytes which should be read to start each character.
-     *
-     * @return integer
+     * @return int
      */
     public function getInitialByteSize()
     {

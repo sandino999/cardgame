@@ -169,7 +169,6 @@ class Swift_Plugins_DecoratorPluginTest extends Swift_Tests_SwiftUnitTestCase
             -> ignoring($message)->getSubject() -> returns($subject)
             -> ignoring($message)->getBody() -> returns($body)
             );
-
         return $message;
     }
 
@@ -190,7 +189,6 @@ class Swift_Plugins_DecoratorPluginTest extends Swift_Tests_SwiftUnitTestCase
             -> ignoring($evt)->getMessage() -> returns($message)
             -> ignoring($evt)
             );
-
         return $evt;
     }
 
@@ -202,7 +200,6 @@ class Swift_Plugins_DecoratorPluginTest extends Swift_Tests_SwiftUnitTestCase
             -> ignoring($part)->getBody() -> returns($body)
             -> ignoring($part)->getId() -> returns($id)
             );
-
         return $part;
     }
 
@@ -229,7 +226,6 @@ class Swift_Plugins_DecoratorPluginTest extends Swift_Tests_SwiftUnitTestCase
             -> ignoring($header)->getFieldName() -> returns($name)
             -> ignoring($header)->getFieldBodyModel() -> returns($body)
             );
-
         return $header;
     }
 }

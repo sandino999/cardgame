@@ -98,7 +98,6 @@ class Swift_Plugins_PopBeforeSmtpPluginTest
             -> ignoring($evt)->getSource() -> returns($transport)
             -> ignoring($evt)->getTransport() -> returns($transport)
             );
-
         return $evt;
     }
 

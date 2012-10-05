@@ -11,9 +11,9 @@
 /**
  * Sends Messages via an abstract Transport subsystem.
  *
- * @package    Swift
+ * @package Swift
  * @subpackage Transport
- * @author     Chris Corbyn
+ * @author Chris Corbyn
  */
 interface Swift_Transport
 {
@@ -41,9 +41,8 @@ interface Swift_Transport
      * The return value is the number of recipients who were accepted for delivery.
      *
      * @param Swift_Mime_Message $message
-     * @param string[]           $failedRecipients An array of failures by-reference
-     *
-     * @return integer
+     * @param string[] &$failedRecipients to collect failures by-reference
+     * @return int
      */
     public function send(Swift_Mime_Message $message, &$failedRecipients = null);
 

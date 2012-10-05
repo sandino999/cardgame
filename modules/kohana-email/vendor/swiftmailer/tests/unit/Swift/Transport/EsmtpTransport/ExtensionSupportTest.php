@@ -5,8 +5,7 @@ require_once 'Swift/Transport/EsmtpTransport.php';
 require_once 'Swift/Transport/EsmtpHandler.php';
 require_once 'Swift/Events/EventDispatcher.php';
 
-interface Swift_Transport_EsmtpHandlerMixin extends Swift_Transport_EsmtpHandler
-{
+interface Swift_Transport_EsmtpHandlerMixin extends Swift_Transport_EsmtpHandler {
     public function setUsername($user);
     public function setPassword($pass);
 }
@@ -243,7 +242,6 @@ class Swift_Transport_EsmtpTransport_ExtensionSupportTest
         $args =& $invocation->getArguments();
         $stop =& $args[4];
         $stop = true;
-
         return "250 ok";
     }
 

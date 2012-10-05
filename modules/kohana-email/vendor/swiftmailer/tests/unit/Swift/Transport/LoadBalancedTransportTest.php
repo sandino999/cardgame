@@ -402,7 +402,6 @@ class Swift_Transport_LoadBalancedTransportTest
     {
         $transport = new Swift_Transport_LoadBalancedTransport();
         $transport->setTransports($transports);
-
         return $transport;
     }
 

@@ -10,9 +10,8 @@
 
 /**
  * Creates filters for replacing needles in a string buffer.
- *
  * @package Swift
- * @author  Chris Corbyn
+ * @author Chris Corbyn
  */
 class Swift_StreamFilters_StringReplacementFilterFactory implements Swift_ReplacementFilterFactory
 {
@@ -21,10 +20,8 @@ class Swift_StreamFilters_StringReplacementFilterFactory implements Swift_Replac
 
     /**
      * Create a new StreamFilter to replace $search with $replace in a string.
-     *
-     * @param string $search
-     * @param string $replace
-     *
+     * @param  string             $search
+     * @param  string             $replace
      * @return Swift_StreamFilter
      */
     public function createFilter($search, $replace)
@@ -38,7 +35,8 @@ class Swift_StreamFilters_StringReplacementFilterFactory implements Swift_Replac
                 $this->_filters[$search][$replace] = array();
             }
 
-            $this->_filters[$search][$replace] = new Swift_StreamFilters_StringReplacementFilter($search, $replace);
+            $this->_filters[$search][$replace]
+                = new Swift_StreamFilters_StringReplacementFilter($search, $replace);
         }
 
         return $this->_filters[$search][$replace];

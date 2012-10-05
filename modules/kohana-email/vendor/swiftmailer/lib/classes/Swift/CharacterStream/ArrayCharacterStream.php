@@ -10,10 +10,9 @@
 
 /**
  * A CharacterStream implementation which stores characters in an internal array.
- *
- * @package    Swift
+ * @package Swift
  * @subpackage CharacterStream
- * @author     Chris Corbyn
+ * @author Chris Corbyn
  */
 class Swift_CharacterStream_ArrayCharacterStream implements Swift_CharacterStream
 {
@@ -26,7 +25,7 @@ class Swift_CharacterStream_ArrayCharacterStream implements Swift_CharacterStrea
     /** The char reader (lazy-loaded) for the current charset */
     private $_charReader;
 
-    /** A factory for creating CharacterReader instances */
+    /** A factory for creatiing CharacterReader instances */
     private $_charReaderFactory;
 
     /** The character set this stream is using */
@@ -43,7 +42,6 @@ class Swift_CharacterStream_ArrayCharacterStream implements Swift_CharacterStrea
 
     /**
      * Create a new CharacterStream with the given $chars, if set.
-     *
      * @param Swift_CharacterReaderFactory $factory for loading validators
      * @param string                       $charset used in the stream
      */
@@ -56,7 +54,6 @@ class Swift_CharacterStream_ArrayCharacterStream implements Swift_CharacterStrea
 
     /**
      * Set the character set used in this CharacterStream.
-     *
      * @param string $charset
      */
     public function setCharacterSet($charset)
@@ -67,7 +64,6 @@ class Swift_CharacterStream_ArrayCharacterStream implements Swift_CharacterStrea
 
     /**
      * Set the CharacterReaderFactory for multi charset support.
-     *
      * @param Swift_CharacterReaderFactory $factory
      */
     public function setCharacterReaderFactory(Swift_CharacterReaderFactory $factory)
@@ -77,7 +73,6 @@ class Swift_CharacterStream_ArrayCharacterStream implements Swift_CharacterStrea
 
     /**
      * Overwrite this character stream using the byte sequence in the byte stream.
-     *
      * @param Swift_OutputByteStream $os output stream to read from
      */
     public function importByteStream(Swift_OutputByteStream $os)
@@ -111,7 +106,6 @@ class Swift_CharacterStream_ArrayCharacterStream implements Swift_CharacterStrea
     /**
      * Import a string a bytes into this CharacterStream, overwriting any existing
      * data in the stream.
-     *
      * @param string $string
      */
     public function importString($string)
@@ -123,9 +117,7 @@ class Swift_CharacterStream_ArrayCharacterStream implements Swift_CharacterStrea
     /**
      * Read $length characters from the stream and move the internal pointer
      * $length further into the stream.
-     *
-     * @param integer $length
-     *
+     * @param  int    $length
      * @return string
      */
     public function read($length)
@@ -155,10 +147,8 @@ class Swift_CharacterStream_ArrayCharacterStream implements Swift_CharacterStrea
     /**
      * Read $length characters from the stream and return a 1-dimensional array
      * containing there octet values.
-     *
-     * @param integer $length
-     *
-     * @return integer[]
+     * @param  int   $length
+     * @return int[]
      */
     public function readBytes($length)
     {
@@ -180,7 +170,6 @@ class Swift_CharacterStream_ArrayCharacterStream implements Swift_CharacterStrea
 
     /**
      * Write $chars to the end of the stream.
-     *
      * @param string $chars
      */
     public function write($chars)
@@ -246,8 +235,7 @@ class Swift_CharacterStream_ArrayCharacterStream implements Swift_CharacterStrea
 
     /**
      * Move the internal pointer to $charOffset in the stream.
-     *
-     * @param integer $charOffset
+     * @param int $charOffset
      */
     public function setPointer($charOffset)
     {

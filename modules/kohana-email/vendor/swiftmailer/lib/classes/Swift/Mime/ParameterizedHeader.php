@@ -10,16 +10,14 @@
 
 /**
  * A MIME Header with parameters.
- *
- * @package    Swift
+ * @package Swift
  * @subpackage Mime
- * @author     Chris Corbyn
+ * @author Chris Corbyn
  */
 interface Swift_Mime_ParameterizedHeader extends Swift_Mime_Header
 {
     /**
      * Set the value of $parameter.
-     *
      * @param string $parameter
      * @param string $value
      */
@@ -27,9 +25,6 @@ interface Swift_Mime_ParameterizedHeader extends Swift_Mime_Header
 
     /**
      * Get the value of $parameter.
-     *
-     * @param string $parameter
-     *
      * @return string
      */
     public function getParameter($parameter);

@@ -10,10 +10,9 @@
 
 /**
  * A MIME entity, in a multipart message.
- *
- * @package    Swift
+ * @package Swift
  * @subpackage Mime
- * @author     Chris Corbyn
+ * @author Chris Corbyn
  */
 class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
 {
@@ -29,7 +28,7 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
     /** The grammar to use for id validation */
     private $_grammar;
 
-    /** A mime boundary, if any is used */
+    /** A mime bounary, if any is used */
     private $_boundary;
 
     /** Mime types to be used based on the nesting level */
@@ -74,7 +73,6 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
 
     /**
      * Create a new SimpleMimeEntity with $headers, $encoder and $cache.
-     *
      * @param Swift_Mime_HeaderSet      $headers
      * @param Swift_Mime_ContentEncoder $encoder
      * @param Swift_KeyCache            $cache
@@ -118,7 +116,6 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
 
     /**
      * Generate a new Content-ID or Message-ID for this MIME entity.
-     *
      * @return string
      */
     public function generateId()
@@ -130,7 +127,6 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
 
     /**
      * Get the {@link Swift_Mime_HeaderSet} for this entity.
-     *
      * @return Swift_Mime_HeaderSet
      */
     public function getHeaders()
@@ -140,10 +136,8 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
 
     /**
      * Get the nesting level of this entity.
-     *
+     * @return int
      * @see LEVEL_TOP, LEVEL_MIXED, LEVEL_RELATED, LEVEL_ALTERNATIVE
-     *
-     * @return integer
      */
     public function getNestingLevel()
     {
@@ -152,7 +146,6 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
 
     /**
      * Get the Content-type of this entity.
-     *
      * @return string
      */
     public function getContentType()
@@ -162,9 +155,7 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
 
     /**
      * Set the Content-type of this entity.
-     *
-     * @param string $type
-     *
+     * @param  string                      $type
      * @return Swift_Mime_SimpleMimeEntity
      */
     public function setContentType($type)
@@ -179,9 +170,7 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
 
     /**
      * Get the CID of this entity.
-     *
      * The CID will only be present in headers if a Content-ID header is present.
-     *
      * @return string
      */
     public function getId()
@@ -193,9 +182,7 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
 
     /**
      * Set the CID of this entity.
-     *
-     * @param string $id
-     *
+     * @param  string                      $id
      * @return Swift_Mime_SimpleMimeEntity
      */
     public function setId($id)
@@ -210,9 +197,7 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
 
     /**
      * Get the description of this entity.
-     *
      * This value comes from the Content-Description header if set.
-     *
      * @return string
      */
     public function getDescription()
@@ -222,11 +207,8 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
 
     /**
      * Set the description of this entity.
-     *
      * This method sets a value in the Content-ID header.
-     *
-     * @param string $description
-     *
+     * @param  string                      $description
      * @return Swift_Mime_SimpleMimeEntity
      */
     public function setDescription($description)
@@ -240,8 +222,7 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
 
     /**
      * Get the maximum line length of the body of this entity.
-     *
-     * @return integer
+     * @return int
      */
     public function getMaxLineLength()
     {
@@ -250,11 +231,8 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
 
     /**
      * Set the maximum line length of lines in this body.
-     *
      * Though not enforced by the library, lines should not exceed 1000 chars.
-     *
-     * @param integer $length
-     *
+     * @param  int                         $length
      * @return Swift_Mime_SimpleMimeEntity
      */
     public function setMaxLineLength($length)
@@ -266,7 +244,6 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
 
     /**
      * Get all children added to this entity.
-     *
      * @return array of Swift_Mime_Entity
      */
     public function getChildren()
@@ -276,10 +253,8 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
 
     /**
      * Set all children of this entity.
-     *
-     * @param array   $children      Swift_Mime_Entity instances
-     * @param integer $compoundLevel For internal use only
-     *
+     * @param  array                       $children      Swiift_Mime_Entity instances
+     * @param  int                         $compoundLevel For internal use only
      * @return Swift_Mime_SimpleMimeEntity
      */
     public function setChildren(array $children, $compoundLevel = null)
@@ -304,7 +279,7 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
                 if ($nextLevel == $level) {
                     $immediateChildren[] = $child;
                 } elseif ($level < $nextLevel) {
-                    //Re-assign immediateChildren to grandchildren
+                    //Re-assign immediateChildren to grandchilden
                     $grandchildren = array_merge($grandchildren, $immediateChildren);
                     //Set new children
                     $immediateChildren = array($child);
@@ -317,7 +292,7 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
         if (!empty($immediateChildren)) {
             $lowestLevel = $this->_getNeededChildLevel($immediateChildren[0], $compoundLevel);
 
-            //Determine which composite media type is needed to accommodate the
+            //Determine which composite media type is needed to accomodate the
             // immediate children
             foreach ($this->_compositeRanges as $mediaType => $range) {
                 if ($lowestLevel > $range[0]
@@ -348,7 +323,6 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
 
     /**
      * Get the body of this entity as a string.
-     *
      * @return string
      */
     public function getBody()
@@ -361,10 +335,8 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
     /**
      * Set the body of this entity, either as a string, or as an instance of
      * {@link Swift_OutputByteStream}.
-     *
-     * @param mixed  $body
-     * @param string $contentType optional
-     *
+     * @param  mixed                       $body
+     * @param  string                      $contentType optional
      * @return Swift_Mime_SimpleMimeEntity
      */
     public function setBody($body, $contentType = null)
@@ -383,7 +355,6 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
 
     /**
      * Get the encoder used for the body of this entity.
-     *
      * @return Swift_Mime_ContentEncoder
      */
     public function getEncoder()
@@ -393,9 +364,7 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
 
     /**
      * Set the encoder used for the body of this entity.
-     *
-     * @param Swift_Mime_ContentEncoder $encoder
-     *
+     * @param  Swift_Mime_ContentEncoder   $encoder
      * @return Swift_Mime_SimpleMimeEntity
      */
     public function setEncoder(Swift_Mime_ContentEncoder $encoder)
@@ -413,7 +382,6 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
 
     /**
      * Get the boundary used to separate children in this entity.
-     *
      * @return string
      */
     public function getBoundary()
@@ -427,12 +395,9 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
 
     /**
      * Set the boundary used to separate children in this entity.
-     *
-     * @param string $boundary
-     *
-     * @return Swift_Mime_SimpleMimeEntity
-     *
+     * @param  string                       $boundary
      * @throws Swift_RfcComplianceException
+     * @return Swift_Mime_SimpleMimeEntity
      */
     public function setBoundary($boundary)
     {
@@ -445,7 +410,6 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
     /**
      * Receive notification that the charset of this entity, or a parent entity
      * has changed.
-     *
      * @param string $charset
      */
     public function charsetChanged($charset)
@@ -456,7 +420,6 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
     /**
      * Receive notification that the encoder of this entity or a parent entity
      * has changed.
-     *
      * @param Swift_Mime_ContentEncoder $encoder
      */
     public function encoderChanged(Swift_Mime_ContentEncoder $encoder)
@@ -466,7 +429,6 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
 
     /**
      * Get this entire entity as a string.
-     *
      * @return string
      */
     public function toString()
@@ -500,9 +462,9 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
     /**
      * Returns a string representation of this object.
      *
-     * @see toString()
-     *
      * @return string
+     *
+     * @see toString()
      */
     public function __toString()
     {
@@ -510,8 +472,7 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
     }
 
     /**
-     * Write this entire entity to a {@see Swift_InputByteStream}.
-     *
+     * Write this entire entity to a {@link Swift_InputByteStream}.
      * @param Swift_InputByteStream
      */
     public function toByteStream(Swift_InputByteStream $is)
@@ -562,8 +523,7 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
     // -- Protected methods
 
     /**
-     * Get the name of the header that provides the ID of this entity
-     */
+     * Get the name of the header that provides the ID of this entity */
     protected function _getIdField()
     {
         return 'Content-ID';
@@ -643,7 +603,6 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
 
     /**
      * Get the grammar used for validation.
-     *
      * @return Swift_Mime_Grammar
      */
     protected function _getGrammar()
@@ -661,7 +620,6 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
 
     /**
      * Returns a random Content-ID or Message-ID.
-     *
      * @return string
      */
     protected function getRandomId()
@@ -820,9 +778,7 @@ class Swift_Mime_SimpleMimeEntity implements Swift_Mime_MimeEntity
 
     /**
      * Throws an Exception if the id passed does not comply with RFC 2822.
-     *
-     * @param string $id
-     *
+     * @param  string                       $id
      * @throws Swift_RfcComplianceException
      */
     private function _assertValidId($id)

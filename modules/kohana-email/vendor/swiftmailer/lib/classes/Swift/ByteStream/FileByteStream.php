@@ -10,10 +10,9 @@
 
 /**
  * Allows reading and writing of bytes to and from a file.
- *
- * @package    Swift
+ * @package Swift
  * @subpackage ByteStream
- * @author     Chris Corbyn
+ * @author Chris Corbyn
  */
 class Swift_ByteStream_FileByteStream extends Swift_ByteStream_AbstractFilterableInputStream implements Swift_FileStream
 {
@@ -40,9 +39,8 @@ class Swift_ByteStream_FileByteStream extends Swift_ByteStream_AbstractFilterabl
 
     /**
      * Create a new FileByteStream for $path.
-     *
-     * @param string  $path
-     * @param boolean $writable if true
+     * @param string $path
+     * @param string $writable if true
      */
     public function __construct($path, $writable = false)
     {
@@ -56,7 +54,6 @@ class Swift_ByteStream_FileByteStream extends Swift_ByteStream_AbstractFilterabl
 
     /**
      * Get the complete path to the file.
-     *
      * @return string
      */
     public function getPath()
@@ -66,16 +63,11 @@ class Swift_ByteStream_FileByteStream extends Swift_ByteStream_AbstractFilterabl
 
     /**
      * Reads $length bytes from the stream into a string and moves the pointer
-     * through the stream by $length.
-     *
-     * If less bytes exist than are requested the
+     * through the stream by $length. If less bytes exist than are requested the
      * remaining bytes are given instead. If no bytes are remaining at all, boolean
      * false is returned.
-     *
-     * @param integer $length
-     *
+     * @param  int               $length
      * @return string
-     *
      * @throws Swift_IoException
      */
     public function read($length)
@@ -101,9 +93,7 @@ class Swift_ByteStream_FileByteStream extends Swift_ByteStream_AbstractFilterabl
 
     /**
      * Move the internal read pointer to $byteOffset in the stream.
-     *
-     * @param integer $byteOffset
-     *
+     * @param  int     $byteOffset
      * @return boolean
      */
     public function setReadPointer($byteOffset)

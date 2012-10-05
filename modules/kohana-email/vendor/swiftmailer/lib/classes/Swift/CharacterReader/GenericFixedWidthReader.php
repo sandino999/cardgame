@@ -10,25 +10,23 @@
 
 /**
  * Provides fixed-width byte sizes for reading fixed-width character sets.
- *
- * @package    Swift
+ * @package Swift
  * @subpackage Encoder
- * @author     Chris Corbyn
- * @author     Xavier De Cock <xdecock@gmail.com>
+ * @author Chris Corbyn
+ * @author Xavier De Cock <xdecock@gmail.com>
  */
 class Swift_CharacterReader_GenericFixedWidthReader implements Swift_CharacterReader
 {
     /**
      * The number of bytes in a single character.
-     *
-     * @var integer
+     * @var int
+     * @access private
      */
     private $_width;
 
     /**
      * Creates a new GenericFixedWidthReader using $width bytes per character.
-     *
-     * @param integer $width
+     * @param int $width
      */
     public function __construct($width)
     {
@@ -36,30 +34,28 @@ class Swift_CharacterReader_GenericFixedWidthReader implements Swift_CharacterRe
     }
 
     /**
-     * Returns the complete character map.
+     * Returns the complete charactermap
      *
-     * @param string  $string
-     * @param integer $startOffset
-     * @param array   $currentMap
-     * @param mixed   $ignoredChars
-     *
-     * @return integer
+     * @param string $string
+     * @param int    $startOffset
+     * @param array  $currentMap
+     * @param mixed  $ignoredChars
+     * @return $int
      */
     public function getCharPositions($string, $startOffset, &$currentMap, &$ignoredChars)
     {
         $strlen = strlen($string);
         // % and / are CPU intensive, so, maybe find a better way
-        $ignored = $strlen % $this->_width;
+        $ignored = $strlen%$this->_width;
         $ignoredChars = substr($string, - $ignored);
         $currentMap = $this->_width;
 
-        return ($strlen - $ignored) / $this->_width;
+        return ($strlen - $ignored)/$this->_width;
     }
 
     /**
-     * Returns the mapType.
-     *
-     * @return integer
+     * Returns mapType
+     * @return int mapType
      */
     public function getMapType()
     {
@@ -68,17 +64,12 @@ class Swift_CharacterReader_GenericFixedWidthReader implements Swift_CharacterRe
 
     /**
      * Returns an integer which specifies how many more bytes to read.
-     *
      * A positive integer indicates the number of more bytes to fetch before invoking
      * this method again.
-     *
      * A value of zero means this is already a valid character.
      * A value of -1 means this cannot possibly be a valid character.
-     *
-     * @param string  $bytes
-     * @param integer $size
-     *
-     * @return integer
+     * @param  string $bytes
+     * @return int
      */
     public function validateByteSequence($bytes, $size)
     {
@@ -89,8 +80,7 @@ class Swift_CharacterReader_GenericFixedWidthReader implements Swift_CharacterRe
 
     /**
      * Returns the number of bytes which should be read to start each character.
-     *
-     * @return integer
+     * @return int
      */
     public function getInitialByteSize()
     {

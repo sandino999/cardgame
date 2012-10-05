@@ -4,6 +4,7 @@
 
 <script>
  alert('Password successfully sent to your email');
+ window.location='/cards/index.php/mycardlist';
  
 </script>
 

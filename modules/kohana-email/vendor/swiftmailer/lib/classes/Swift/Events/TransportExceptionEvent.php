@@ -10,23 +10,20 @@
 
 /**
  * Generated when a TransportException is thrown from the Transport system.
- *
- * @package    Swift
+ * @package Swift
  * @subpackage Events
- * @author     Chris Corbyn
+ * @author Chris Corbyn
  */
 class Swift_Events_TransportExceptionEvent extends Swift_Events_EventObject
 {
     /**
      * The Exception thrown.
-     *
      * @var Swift_TransportException
      */
     private $_exception;
 
     /**
      * Create a new TransportExceptionEvent for $transport.
-     *
      * @param Swift_Transport          $transport
      * @param Swift_TransportException $ex
      */
@@ -38,7 +35,6 @@ class Swift_Events_TransportExceptionEvent extends Swift_Events_EventObject
 
     /**
      * Get the TransportException thrown.
-     *
      * @return Swift_TransportException
      */
     public function getException()

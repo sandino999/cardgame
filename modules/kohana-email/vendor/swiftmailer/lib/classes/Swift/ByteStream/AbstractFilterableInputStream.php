@@ -10,50 +10,39 @@
 
 /**
  * Provides the base functionality for an InputStream supporting filters.
- *
- * @package    Swift
+ * @package Swift
  * @subpackage ByteStream
- * @author     Chris Corbyn
+ * @author Chris Corbyn
  */
 abstract class Swift_ByteStream_AbstractFilterableInputStream implements Swift_InputByteStream, Swift_Filterable
 {
-    /**
-     * Write sequence.
-     */
+    /** Write sequence */
     protected $_sequence = 0;
 
-    /**
-     * StreamFilters.
-     */
+    /** StreamFilters */
     private $_filters = array();
 
-    /**
-     * A buffer for writing.
-     */
+    /** A buffer for writing */
     private $_writeBuffer = '';
 
-    /**
-     * Bound streams.
-     *
-     * @var Swift_InputByteStream[]
-     */
+    /** Bound streams */
     private $_mirrors = array();
 
     /**
      * Commit the given bytes to the storage medium immediately.
-     *
      * @param string $bytes
+     * @access protected
      */
     abstract protected function _commit($bytes);
 
     /**
      * Flush any buffers/content with immediate effect.
+     * @access protected
      */
     abstract protected function _flush();
 
     /**
      * Add a StreamFilter to this InputByteStream.
-     *
      * @param Swift_StreamFilter $filter
      * @param string             $key
      */
@@ -64,7 +53,6 @@ abstract class Swift_ByteStream_AbstractFilterableInputStream implements Swift_I
 
     /**
      * Remove an already present StreamFilter based on its $key.
-     *
      * @param string $key
      */
     public function removeFilter($key)
@@ -74,11 +62,7 @@ abstract class Swift_ByteStream_AbstractFilterableInputStream implements Swift_I
 
     /**
      * Writes $bytes to the end of the stream.
-     *
-     * @param string $bytes
-     *
-     * @return integer
-     *
+     * @param  string            $bytes
      * @throws Swift_IoException
      */
     public function write($bytes)
@@ -107,7 +91,6 @@ abstract class Swift_ByteStream_AbstractFilterableInputStream implements Swift_I
 
     /**
      * Attach $is to this stream.
-     *
      * The stream acts as an observer, receiving all data that is written.
      * All {@link write()} and {@link flushBuffers()} operations will be mirrored.
      *
@@ -120,7 +103,6 @@ abstract class Swift_ByteStream_AbstractFilterableInputStream implements Swift_I
 
     /**
      * Remove an already bound stream.
-     *
      * If $is is not bound, no errors will be raised.
      * If the stream currently has any buffered data it will be written to $is
      * before unbinding occurs.
@@ -142,7 +124,6 @@ abstract class Swift_ByteStream_AbstractFilterableInputStream implements Swift_I
     /**
      * Flush the contents of the stream (empty it) and set the internal pointer
      * to the beginning.
-     *
      * @throws Swift_IoException
      */
     public function flushBuffers()

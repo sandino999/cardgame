@@ -1,11 +1,6 @@
 Changelog since Version 4.x.x
 =============================
 
-4.2.2 (2012-XX-XX)
-------------------
-
- * allowed specifying a whitelist with regular expressions in RedirectingPlugin
-
 4.2.1 (2012-07-13)
 ------------------
 

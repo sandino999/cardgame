@@ -10,11 +10,10 @@
 
 /**
  * Analyzes characters for a specific character set.
- *
- * @package    Swift
+ * @package Swift
  * @subpackage Encoder
- * @author     Chris Corbyn
- * @author     Xavier De Cock <xdecock@gmail.com>
+ * @author Chris Corbyn
+ * @author Xavier De Cock <xdecock@gmail.com>
  */
 interface Swift_CharacterReader
 {
@@ -23,47 +22,38 @@ interface Swift_CharacterReader
     const MAP_TYPE_POSITIONS = 0x03;
 
     /**
-     * Returns the complete character map
+     * Returns the complete charactermap
      *
-     * @param string  $string
-     * @param integer $startOffset
-     * @param array   $currentMap
-     * @param mixed   $ignoredChars
-     *
-     * @return integer
+     * @param  string $string
+     * @param  int    $startOffset
+     * @param  array  $currentMap
+     * @param  mixed  $ignoredChars
+     * @return int
      */
     public function getCharPositions($string, $startOffset, &$currentMap, &$ignoredChars);
 
     /**
-     * Returns the mapType, see constants.
-     *
-     * @return integer
+     * Returns mapType
+     * @return int mapType
      */
     public function getMapType();
 
     /**
      * Returns an integer which specifies how many more bytes to read.
-     *
      * A positive integer indicates the number of more bytes to fetch before invoking
      * this method again.
-     *
      * A value of zero means this is already a valid character.
      * A value of -1 means this cannot possibly be a valid character.
-     *
-     * @param integer[] $bytes
-     * @param integer   $size
-     *
-     * @return integer
+     * @param  int[] $bytes
+     * @return int
      */
     public function validateByteSequence($bytes, $size);
 
     /**
      * Returns the number of bytes which should be read to start each character.
-     *
-     * For fixed width character sets this should be the number of octets-per-character.
-     * For multibyte character sets this will probably be 1.
-     *
-     * @return integer
+     * For fixed width character sets this should be the number of
+     * octets-per-character. For multibyte character sets this will probably be 1.
+     * @return int
      */
     public function getInitialByteSize();
 }

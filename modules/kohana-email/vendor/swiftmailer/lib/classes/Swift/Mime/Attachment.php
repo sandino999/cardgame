@@ -10,10 +10,9 @@
 
 /**
  * An attachment, in a multipart message.
- *
- * @package    Swift
+ * @package Swift
  * @subpackage Mime
- * @author     Chris Corbyn
+ * @author Chris Corbyn
  */
 class Swift_Mime_Attachment extends Swift_Mime_SimpleMimeEntity
 {
@@ -22,7 +21,6 @@ class Swift_Mime_Attachment extends Swift_Mime_SimpleMimeEntity
 
     /**
      * Create a new Attachment with $headers, $encoder and $cache.
-     *
      * @param Swift_Mime_HeaderSet      $headers
      * @param Swift_Mime_ContentEncoder $encoder
      * @param Swift_KeyCache            $cache
@@ -39,10 +37,8 @@ class Swift_Mime_Attachment extends Swift_Mime_SimpleMimeEntity
 
     /**
      * Get the nesting level used for this attachment.
-     *
      * Always returns {@link LEVEL_MIXED}.
-     *
-     * @return integer
+     * @return int
      */
     public function getNestingLevel()
     {
@@ -51,9 +47,7 @@ class Swift_Mime_Attachment extends Swift_Mime_SimpleMimeEntity
 
     /**
      * Get the Content-Disposition of this attachment.
-     *
      * By default attachments have a disposition of "attachment".
-     *
      * @return string
      */
     public function getDisposition()
@@ -63,9 +57,7 @@ class Swift_Mime_Attachment extends Swift_Mime_SimpleMimeEntity
 
     /**
      * Set the Content-Disposition of this attachment.
-     *
-     * @param string $disposition
-     *
+     * @param  string                $disposition
      * @return Swift_Mime_Attachment
      */
     public function setDisposition($disposition)
@@ -81,7 +73,6 @@ class Swift_Mime_Attachment extends Swift_Mime_SimpleMimeEntity
 
     /**
      * Get the filename of this attachment when downloaded.
-     *
      * @return string
      */
     public function getFilename()
@@ -91,9 +82,7 @@ class Swift_Mime_Attachment extends Swift_Mime_SimpleMimeEntity
 
     /**
      * Set the filename of this attachment.
-     *
-     * @param string $filename
-     *
+     * @param  string                $filename
      * @return Swift_Mime_Attachment
      */
     public function setFilename($filename)
@@ -106,8 +95,7 @@ class Swift_Mime_Attachment extends Swift_Mime_SimpleMimeEntity
 
     /**
      * Get the file size of this attachment.
-     *
-     * @return integer
+     * @return int
      */
     public function getSize()
     {
@@ -116,9 +104,7 @@ class Swift_Mime_Attachment extends Swift_Mime_SimpleMimeEntity
 
     /**
      * Set the file size of this attachment.
-     *
-     * @param integer $size
-     *
+     * @param  int                   $size
      * @return Swift_Mime_Attachment
      */
     public function setSize($size)
@@ -130,10 +116,8 @@ class Swift_Mime_Attachment extends Swift_Mime_SimpleMimeEntity
 
     /**
      * Set the file that this attachment is for.
-     *
-     * @param Swift_FileStream $file
-     * @param string           $contentType optional
-     *
+     * @param  Swift_FileStream      $file
+     * @param  string                $contentType optional
      * @return Swift_Mime_Attachment
      */
     public function setFile(Swift_FileStream $file, $contentType = null)

@@ -10,9 +10,8 @@
 
 /**
  * Dependency Injection container.
- *
  * @package Swift
- * @author  Chris Corbyn
+ * @author Chris Corbyn
  */
 class Swift_DependencyContainer
 {
@@ -39,14 +38,12 @@ class Swift_DependencyContainer
 
     /**
      * Constructor should not be used.
-     *
      * Use {@link getInstance()} instead.
      */
     public function __construct() { }
 
     /**
      * Returns a singleton of the DependencyContainer.
-     *
      * @return Swift_DependencyContainer
      */
     public static function getInstance()
@@ -60,7 +57,6 @@ class Swift_DependencyContainer
 
     /**
      * List the names of all items stored in the Container.
-     *
      * @return array
      */
     public function listItems()
@@ -70,12 +66,9 @@ class Swift_DependencyContainer
 
     /**
      * Test if an item is registered in this container with the given name.
-     *
-     * @see register()
-     *
-     * @param string $itemName
-     *
+     * @param  string  $itemName
      * @return boolean
+     * @see register()
      */
     public function has($itemName)
     {
@@ -85,14 +78,10 @@ class Swift_DependencyContainer
 
     /**
      * Lookup the item with the given $itemName.
-     *
-     * @see register()
-     *
-     * @param string $itemName
-     *
+     * @param  string                    $itemName
      * @return mixed
-     *
      * @throws Swift_DependencyException If the dependency is not found
+     * @see register()
      */
     public function lookup($itemName)
     {
@@ -116,9 +105,7 @@ class Swift_DependencyContainer
 
     /**
      * Create an array of arguments passed to the constructor of $itemName.
-     *
-     * @param string $itemName
-     *
+     * @param  string $itemName
      * @return array
      */
     public function createDependenciesFor($itemName)
@@ -133,15 +120,13 @@ class Swift_DependencyContainer
 
     /**
      * Register a new dependency with $itemName.
-     *
      * This method returns the current DependencyContainer instance because it
      * requires the use of the fluid interface to set the specific details for the
      * dependency.
-     * @see asNewInstanceOf(), asSharedInstanceOf(), asValue()
      *
-     * @param string $itemName
-     *
+     * @param  string                    $itemName
      * @return Swift_DependencyContainer
+     * @see asNewInstanceOf(), asSharedInstanceOf(), asValue()
      */
     public function register($itemName)
     {
@@ -153,11 +138,9 @@ class Swift_DependencyContainer
 
     /**
      * Specify the previously registered item as a literal value.
-     *
      * {@link register()} must be called before this will work.
      *
-     * @param mixed $value
-     *
+     * @param  mixed                     $value
      * @return Swift_DependencyContainer
      */
     public function asValue($value)
@@ -171,9 +154,7 @@ class Swift_DependencyContainer
 
     /**
      * Specify the previously registered item as an alias of another item.
-     *
-     * @param string $lookup
-     *
+     * @param  string                    $lookup
      * @return Swift_DependencyContainer
      */
     public function asAliasOf($lookup)
@@ -187,16 +168,13 @@ class Swift_DependencyContainer
 
     /**
      * Specify the previously registered item as a new instance of $className.
-     *
      * {@link register()} must be called before this will work.
      * Any arguments can be set with {@link withDependencies()},
      * {@link addConstructorValue()} or {@link addConstructorLookup()}.
      *
-     * @see withDependencies(), addConstructorValue(), addConstructorLookup()
-     *
-     * @param string $className
-     *
+     * @param  string                    $className
      * @return Swift_DependencyContainer
+     * @see withDependencies(), addConstructorValue(), addConstructorLookup()
      */
     public function asNewInstanceOf($className)
     {
@@ -209,11 +187,8 @@ class Swift_DependencyContainer
 
     /**
      * Specify the previously registered item as a shared instance of $className.
-     *
      * {@link register()} must be called before this will work.
-     *
-     * @param string $className
-     *
+     * @param  string                    $className
      * @return Swift_DependencyContainer
      */
     public function asSharedInstanceOf($className)
@@ -227,14 +202,11 @@ class Swift_DependencyContainer
 
     /**
      * Specify a list of injected dependencies for the previously registered item.
-     *
      * This method takes an array of lookup names.
      *
-     * @see addConstructorValue(), addConstructorLookup()
-     *
-     * @param array $lookups
-     *
+     * @param  array                     $lookups
      * @return Swift_DependencyContainer
+     * @see addConstructorValue(), addConstructorLookup()
      */
     public function withDependencies(array $lookups)
     {
@@ -251,11 +223,9 @@ class Swift_DependencyContainer
      * Specify a literal (non looked up) value for the constructor of the
      * previously registered item.
      *
-     * @see withDependencies(), addConstructorLookup()
-     *
-     * @param mixed $value
-     *
+     * @param  mixed                     $value
      * @return Swift_DependencyContainer
+     * @see withDependencies(), addConstructorLookup()
      */
     public function addConstructorValue($value)
     {
@@ -272,11 +242,9 @@ class Swift_DependencyContainer
      * Specify a dependency lookup for the constructor of the previously
      * registered item.
      *
-     * @see withDependencies(), addConstructorValue()
-     *
-     * @param string $lookup
-     *
+     * @param  string                    $lookup
      * @return Swift_DependencyContainer
+     * @see withDependencies(), addConstructorValue()
      */
     public function addConstructorLookup($lookup)
     {

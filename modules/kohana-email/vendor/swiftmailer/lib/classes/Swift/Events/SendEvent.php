@@ -10,10 +10,9 @@
 
 /**
  * Generated when a message is being sent.
- *
- * @package    Swift
+ * @package Swift
  * @subpackage Events
- * @author     Chris Corbyn
+ * @author Chris Corbyn
  */
 class Swift_Events_SendEvent extends Swift_Events_EventObject
 {
@@ -31,28 +30,24 @@ class Swift_Events_SendEvent extends Swift_Events_EventObject
 
     /**
      * The Message being sent.
-     *
      * @var Swift_Mime_Message
      */
     private $_message;
 
     /**
      * Any recipients which failed after sending.
-     *
      * @var string[]
      */
     private $_failedRecipients = array();
 
     /**
      * The overall result as a bitmask from the class constants.
-     *
-     * @var integer
+     * @var int
      */
     private $_result;
 
     /**
      * Create a new SendEvent for $source and $message.
-     *
      * @param Swift_Transport    $source
      * @param Swift_Mime_Message $message
      */
@@ -65,7 +60,6 @@ class Swift_Events_SendEvent extends Swift_Events_EventObject
 
     /**
      * Get the Transport used to send the Message.
-     *
      * @return Swift_Transport
      */
     public function getTransport()
@@ -75,7 +69,6 @@ class Swift_Events_SendEvent extends Swift_Events_EventObject
 
     /**
      * Get the Message being sent.
-     *
      * @return Swift_Mime_Message
      */
     public function getMessage()
@@ -85,7 +78,6 @@ class Swift_Events_SendEvent extends Swift_Events_EventObject
 
     /**
      * Set the array of addresses that failed in sending.
-     *
      * @param array $recipients
      */
     public function setFailedRecipients($recipients)
@@ -95,7 +87,6 @@ class Swift_Events_SendEvent extends Swift_Events_EventObject
 
     /**
      * Get an recipient addresses which were not accepted for delivery.
-     *
      * @return string[]
      */
     public function getFailedRecipients()
@@ -105,8 +96,7 @@ class Swift_Events_SendEvent extends Swift_Events_EventObject
 
     /**
      * Set the result of sending.
-     *
-     * @param integer $result
+     * @return int
      */
     public function setResult($result)
     {
@@ -115,11 +105,9 @@ class Swift_Events_SendEvent extends Swift_Events_EventObject
 
     /**
      * Get the result of this Event.
-     *
      * The return value is a bitmask from
-     * {@see RESULT_PENDING, RESULT_SUCCESS, RESULT_TENTATIVE, RESULT_FAILED}
-     *
-     * @return integer
+     * {@link RESULT_PENDING, RESULT_SUCCESS, RESULT_TENTATIVE, RESULT_FAILED}
+     * @return int
      */
     public function getResult()
     {

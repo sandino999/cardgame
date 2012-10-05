@@ -10,10 +10,9 @@
 
 /**
  * A generic IoBuffer implementation supporting remote sockets and local processes.
- *
- * @package    Swift
+ * @package Swift
  * @subpackage Transport
- * @author     Chris Corbyn
+ * @author Chris Corbyn
  */
 class Swift_Transport_StreamBuffer extends Swift_ByteStream_AbstractFilterableInputStream implements Swift_Transport_IoBuffer
 {
@@ -37,7 +36,6 @@ class Swift_Transport_StreamBuffer extends Swift_ByteStream_AbstractFilterableIn
 
     /**
      * Create a new StreamBuffer using $replacementFactory for transformations.
-     *
      * @param Swift_ReplacementFilterFactory $replacementFactory
      */
     public function __construct(Swift_ReplacementFilterFactory $replacementFactory)
@@ -47,9 +45,7 @@ class Swift_Transport_StreamBuffer extends Swift_ByteStream_AbstractFilterableIn
 
     /**
      * Perform any initialization needed, using the given $params.
-     *
      * Parameters will vary depending upon the type of IoBuffer used.
-     *
      * @param array $params
      */
     public function initialize(array $params)
@@ -68,7 +64,6 @@ class Swift_Transport_StreamBuffer extends Swift_ByteStream_AbstractFilterableIn
 
     /**
      * Set an individual param on the buffer (e.g. switching to SSL).
-     *
      * @param string $param
      * @param mixed  $value
      */
@@ -122,10 +117,7 @@ class Swift_Transport_StreamBuffer extends Swift_ByteStream_AbstractFilterableIn
 
     /**
      * Set an array of string replacements which should be made on data written
-     * to the buffer.
-     *
-     * This could replace LF with CRLF for example.
-     *
+     * to the buffer.  This could replace LF with CRLF for example.
      * @param string[] $replacements
      */
     public function setWriteTranslations(array $replacements)
@@ -149,15 +141,10 @@ class Swift_Transport_StreamBuffer extends Swift_ByteStream_AbstractFilterableIn
 
     /**
      * Get a line of output (including any CRLF).
-     *
      * The $sequence number comes from any writes and may or may not be used
      * depending upon the implementation.
-     *
-     * @param integer $sequence of last write to scan from
-     *
+     * @param  int    $sequence of last write to scan from
      * @return string
-     *
-     * @throws Swift_IoException
      */
     public function readLine($sequence)
     {
@@ -180,16 +167,11 @@ class Swift_Transport_StreamBuffer extends Swift_ByteStream_AbstractFilterableIn
 
     /**
      * Reads $length bytes from the stream into a string and moves the pointer
-     * through the stream by $length.
-     *
-     * If less bytes exist than are requested the remaining bytes are given instead.
-     * If no bytes are remaining at all, boolean false is returned.
-     *
-     * @param integer $length
-     *
-     * @return string|boolean
-     *
-     * @throws Swift_IoException
+     * through the stream by $length. If less bytes exist than are requested the
+     * remaining bytes are given instead. If no bytes are remaining at all, boolean
+     * false is returned.
+     * @param  int    $length
+     * @return string
      */
     public function read($length)
     {
@@ -239,6 +221,7 @@ class Swift_Transport_StreamBuffer extends Swift_ByteStream_AbstractFilterableIn
 
     /**
      * Establishes a connection to a remote server.
+     * @access private
      */
     private function _establishSocketConnection()
     {
@@ -273,6 +256,7 @@ class Swift_Transport_StreamBuffer extends Swift_ByteStream_AbstractFilterableIn
 
     /**
      * Opens a process for input/output.
+     * @access private
      */
     private function _establishProcessConnection()
     {

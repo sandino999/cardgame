@@ -10,17 +10,16 @@
 
 /**
  * Contains a list of redundant Transports so when one fails, the next is used.
- *
- * @package    Swift
+ * @package Swift
  * @subpackage Transport
- * @author     Chris Corbyn
+ * @author Chris Corbyn
  */
 class Swift_Transport_FailoverTransport extends Swift_Transport_LoadBalancedTransport
 {
     /**
-     * Registered transport currently used.
-     *
+     * Registered transport curently used.
      * @var Swift_Transport
+     * @access private
      */
     private $_currentTransport;
 
@@ -34,13 +33,10 @@ class Swift_Transport_FailoverTransport extends Swift_Transport_LoadBalancedTran
 
     /**
      * Send the given Message.
-     *
      * Recipient/sender data will be retrieved from the Message API.
      * The return value is the number of recipients who were accepted for delivery.
-     *
      * @param Swift_Mime_Message $message
-     * @param string[]           $failedRecipients An array of failures by-reference
-     *
+     * @param string[] &$failedRecipients to collect failures by-reference
      * @return int
      */
     public function send(Swift_Mime_Message $message, &$failedRecipients = null)

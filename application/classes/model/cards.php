@@ -1,4 +1,6 @@
 <?php defined('SYSPATH') or die('No direct script access.');
+   
+
 
 class Model_cards extends Model_Database {
 	
@@ -197,20 +199,25 @@ class Model_cards extends Model_Database {
 	
 	public function send_password($email)
 	{
-	//	  $mail = email::factory()->subject('Email subject')
-	//	  ->to($email)->from('no-reply@email.com','MyName')->message('hello')->send();
-		  
-		 // $mailer = email::connect();
-		 
-		   //$mail = email::compose()->to($to)->from('no-reply@mysite.com')
-			//		->subject('Welcome')->send();
+		$to = $email;
+		$from ='sandino.dolosa@beenest-tech.com';
+		$subject='Subject';	
+		$password = $this->get_password($email);
+		$message='This is your password for your account: '.$password;
+		
+		$mailer = email::connect();
 			
-			
-		 
-		//	$subject = ' : Message to Leet Street';
-		//	$from = array('Clarence', 'ratnaraju.java@gmail.com');
-		//	email::send($email, $from , $subject, 'hi how r u Brother ');
-			
+		email::send($to,$from,$subject,$message);	  			
+	}
+	
+	public function get_password($email)
+	{
+		$query=db::select()->from('accounts')->where('email','=',$email)->execute();
+		
+		foreach($query as $row)
+		{
+			return $row['password'];
+		}
 	}
 	
 	public function check_if_email_exists($email)
@@ -240,7 +247,6 @@ class Model_cards extends Model_Database {
 		{
 			if($row['answer']== $ans)
 			{ 
-
 			  return true;
 			}
 		}

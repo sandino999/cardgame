@@ -113,14 +113,13 @@ class Model_cards extends Model_Database {
 		}
 		else if($maildb == true)
 		{
-		?>
+			?>
 			<script>
 				alert('email already exists in the database');
 			</script>
-		<?php
+			<?php
 			return false;
 		}
-	
 		else
 		{
 			?>
@@ -162,6 +161,8 @@ class Model_cards extends Model_Database {
 	
 	public function login($username,$passwd)
 	{
+	
+		$id = $this->confirm_username_password($username,$passwd);  //check if username and password match 
 		
 		if($username == '' OR $passwd == '')   // check if username and password is blank
 		{
@@ -172,12 +173,29 @@ class Model_cards extends Model_Database {
 		  <?php
 		  return false;
 		}
+		else if($id > 0)	// compare variable id to zero, if greater than zero, means username and password match
+		{
+			return $id;
+		}
+		else
+		{
+		?>  
+			<script>
+				alert('Invalid Username and Password');
+			</script>
+		<?php
+		return false;
+		}		
 		
+	}
+	
+	public function confirm_username_password($user,$pass)
+	{
 		$query=db::select('*')->from('accounts')->execute();
 		
 		foreach($query as $result)
 		{
-		   if($username==$result['username'] AND $passwd==$result['password'])   // check if username and password match
+		   if($user==$result['username'] AND $pass==$result['password'])   // check if username and password match
 		   {	
 			?>
 				<script>	
@@ -188,13 +206,6 @@ class Model_cards extends Model_Database {
 		   }
 		   
 		}
-		
-		?>  <script>
-						alert('Invalid Username and Password');
-						window.location='/cards/index.php/MyCardList';
-					</script>
-				<?php
-		
 	}
 	
 	public function send_password($email)

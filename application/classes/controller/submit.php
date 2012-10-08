@@ -31,13 +31,12 @@ class Controller_Submit extends Controller {
 			$email=$_POST['txtemail'];
 			
 			$return = $this->model->register($fname,$mname,$lname,$user,$pass,$retype,$secret,$ans,$contact,$addr,$email);
-		    if($return == false)
+		    
+			if($return == false)
 			{
 			  $this->response->body($this->regview);
-			}
-		   
+			}  
 		}
-
 		elseif(isset($_POST['btnlogin']))
 		{
 		   $user=$_POST['txtuser'];
@@ -68,6 +67,7 @@ class Controller_Submit extends Controller {
 		elseif(isset($_POST['btnregister']))
 		{
 		  $this->request->redirect('index.php/register');
+		  
 		}
 	}
 	
@@ -75,7 +75,7 @@ class Controller_Submit extends Controller {
 	{
 		$card_owning = $this->model->check_card_owning($id);
 		
-		if($card_owning==true)
+		if($card_owning == true)
 		{
 		  $initial_display = $this->model->get_list($id);
 		  $view = $this->view->bind('card_list',$initial_display);

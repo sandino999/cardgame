@@ -4,7 +4,6 @@
 
 <script>
  alert('Email does not exists');
- window.location='/cards/index.php/recover';
 </script>
 
 <?php

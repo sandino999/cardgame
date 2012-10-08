@@ -6,42 +6,41 @@ class Model_cards extends Model_Database {
 	
 	public function get_list($id)
 	{	
-		$results=DB::select()->from('card_owning')->join('card_info')
-		->on('card_owning.card_owning_name','=','card_info.card_name')
-		->where('card_owning.account_owning_id','=',$id)->execute();
+		$results=DB::select()->from('account_cards')->join('cards')
+		->on('account_cards.card_owning_name','=','cards.card_name')
+		->where('account_cards.account_owning_id','=',$id)->execute();
 		
 		return $results;	
 	}
 	
-	public function get_card_info()
+	public function get_cards()
 	{
-	  $result = db::select()->from('card_info')->execute();
+	  $result = db::select()->from('cards')->execute();
 	  return $result;
 	}
 	
 	public function check_card_owning($id)
 	{
-	  $results = db::select()->from('card_owning')->execute();
+		$results = db::select()->from('account_cards')->execute();
 	  
-	  foreach($results as $check)
-	  {
-	    if($check['account_owning_id']==$id)
+		foreach($results as $check)
 		{
-		   return true;
-		}
-		else
-		{
-		  return false;
-		}
+			if($check['account_owning_id']==$id)
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
 	  }
-	  
 	}
 		
 	public function str_ascending($id)
 	{
-		$results=DB::select()->from('card_owning')->join('card_info')
-		->on('card_owning.card_owning_name','=','card_info.card_name')
-		->where('card_owning.account_owning_id','=',$id)->order_by('Strength','ASC')
+		$results=DB::select()->from('account_cards')->join('cards')
+		->on('account_cards.card_owning_name','=','cards.card_name')
+		->where('account_cards.account_owning_id','=',$id)->order_by('Strength','ASC')
 		->execute();
 	 
 		return $results;
@@ -49,9 +48,9 @@ class Model_cards extends Model_Database {
 
 	public function str_descending($id)
 	{
-		$results=DB::select()->from('card_owning')->join('card_info')
-		->on('card_owning.card_owning_name','=','card_info.card_name')
-		->where('card_owning.account_owning_id','=',$id)->order_by('Strength','DESC')
+		$results=DB::select()->from('account_cards')->join('cards')
+		->on('account_cards.card_owning_name','=','cards.card_name')
+		->where('account_cards.account_owning_id','=',$id)->order_by('Strength','DESC')
 		->execute();
 			
 		return $results;
@@ -59,9 +58,9 @@ class Model_cards extends Model_Database {
 	
 	public function def_ascending($id)
 	{
-		$results=DB::select()->from('card_owning')->join('card_info')
-		->on('card_owning.card_owning_name','=','card_info.card_name')
-		->where('card_owning.account_owning_id','=',$id)->order_by('Defense','ASC')
+		$results=DB::select()->from('account_cards')->join('cards')
+		->on('account_cards.card_owning_name','=','cards.card_name')
+		->where('account_cards.account_owning_id','=',$id)->order_by('Defense','ASC')
 		->execute();
 	 
 		return $results;
@@ -69,9 +68,9 @@ class Model_cards extends Model_Database {
 	
 	public function def_descending($id)
 	{
-		$results=DB::select()->from('card_owning')->join('card_info')
-		->on('card_owning.card_owning_name','=','card_info.card_name')
-		->where('card_owning.account_owning_id','=',$id)->order_by('Defense','DESC')
+		$results=DB::select()->from('account_cards')->join('cards')
+		->on('account_cards.card_owning_name','=','cards.card_name')
+		->where('account_cards.account_owning_id','=',$id)->order_by('Defense','DESC')
 		->execute();
 		
 		return $results;
@@ -86,60 +85,48 @@ class Model_cards extends Model_Database {
 		if($fname == '' OR $mname =='' OR $lname == '' OR $user == '' OR $pass == '' OR $retype == '' 
 		OR $secret  == '' OR $ans  == '' OR $contact  == '' OR $addr  == '' OR $email == '')  // if fields are missing
 		{	
-		?>
-			<script>
-				alert('Fill in missing fields');
-			</script>
-		<?php
+			$type=3;
+			$this->message($type);
+			
 			return false;
 		}
-		else if($pass!=$retype)   // if password is equal to retype password
+		else if($pass!=$retype)   // if password is not equal to retype password
 		{
-		?>
-			<script>
-				alert('Password does not match!');
-			</script>
-		<?php
+			$type=5;
+			$this->message($type);
+			
 			return false;
 		}
 		else if($usernamedb == true)   //check if username exists
 		{
-		?>
-			<script>
-				alert('Username already exists in the database');
-			</script>
-		<?php
+			$type=6;
+			$this->message($type);
+			
 			return false;
 		}
-		else if($maildb == true)
-		{
-			?>
-			<script>
-				alert('email already exists in the database');
-			</script>
-			<?php
+		else if($maildb == true)		// check if email exists in the database
+		{	
+			$type=7;
+			$this->message($type);
+			
 			return false;
 		}
 		else
 		{
 			?>
 			<script type='text/javascript'>
-		
-			var answer= confirm('Register?');
+			
+			var answer = confirm('Register?');
 		
 			if(answer)
 			{
 			<?php
 			
 				DB::insert('accounts',array('username','password','secret_question','answer','firstname','middlename','surname','contact_no','address','email'))
-				->values(array($user,$pass,$secret,$ans,$fname,$mname,$lname,$contact,$addr,$email))->execute();
+				->values(array($user,MD5($pass),$secret,$ans,$fname,$mname,$lname,$contact,$addr,$email))->execute();
 			?>
-			alert('Record Added');
-			window.location='/cards/index.php/MyCardList';
-			}
-			else
-			{
-			window.location='/cards/index.php/Register';
+				alert('Record Added');
+				window.location = '../mycardlist';
 			}
 			</script>
 			<?php
@@ -166,43 +153,33 @@ class Model_cards extends Model_Database {
 		
 		if($username == '' OR $passwd == '')   // check if username and password is blank
 		{
-		  ?>
-			<script>
-				alert('Fill in missing fields');  
-			</script>
-		  <?php
-		  return false;
+			$type=3;
+			$this->message($type);
+			return false;
 		}
 		else if($id > 0)	// compare variable id to zero, if greater than zero, means username and password match
 		{
 			return $id;
 		}
-		else
+		else				// else invalid usernae and password
 		{
-		?>  
-			<script>
-				alert('Invalid Username and Password');
-			</script>
-		<?php
-		return false;
+			$type=4;
+			$this->message($type);
+			
+			return false;
 		}		
 		
 	}
 	
 	public function confirm_username_password($user,$pass)
 	{
-		$query=db::select('*')->from('accounts')->execute();
+		$query=db::select()->from('accounts')->execute();
 		
 		foreach($query as $result)
 		{
-		   if($user==$result['username'] AND $pass==$result['password'])   // check if username and password match
+		   if($user==$result['username'] AND md5($pass) == $result['password'])   // check if username and password match
 		   {	
-			?>
-				<script>	
-					alert('You are now logged on');
-				</script>
-			<?php
-			   return $result['account_id'];	
+			   return $result['id'];	
 		   }
 		   
 		}
@@ -213,12 +190,20 @@ class Model_cards extends Model_Database {
 		$to = $email;
 		$from ='sandino.dolosa@beenest-tech.com';
 		$subject='Subject';	
-		$password = $this->get_password($email);
-		$message='This is your password for your account: '.$password;
+		
+		$id = $this->get_account_id($email);
+		$server_name = $this->get_server_name();
+		
+		
+		$link = $server_name.url::site().'accounts/change_password/'.$id;
+		$message='Click the link to this account to reset your password: '.$link;
 		
 		$mailer = email::connect();
 			
-		email::send($to,$from,$subject,$message);	  			
+		email::send($to,$from,$subject,$message);	 
+
+		$type=8;
+		$this->message($type);
 	}
 	
 	public function get_password($email)
@@ -245,9 +230,10 @@ class Model_cards extends Model_Database {
 	
 	public function get_secret_question($email)
 	{
-      $query=db::select('*','question_name')->from('accounts')->join('secret_question')
-	  ->on('accounts.secret_question','=','secret_question.question_id')->where('email','=',$email)->execute();
-	  return $query; 
+		$query=db::select('*','question_name')->from('accounts')->join('secret_question')
+		->on('accounts.secret_question','=','secret_question.id')->where('email','=',$email)->execute();
+	  
+		return $query; 
 	}
 	
 	public function confirm_secret_question_ans($ans,$email)
@@ -263,6 +249,110 @@ class Model_cards extends Model_Database {
 		}
 		
 		return false;
+	}
+	
+	
+	
+	public function get_account_id($email)
+	{
+		$query = db::select()->from('accounts')->where('email','=',$email)->execute();
+		
+		foreach($query as $row)
+		{
+		  return $row['id'];
+		}
+	}
+	
+	public function get_server_name()
+	{
+		$protocol = 'http';
+		if (isset($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == '443') 
+		{
+		$protocol = 'https';
+		}
+	
+		$host = $_SERVER['HTTP_HOST'];
+		$baseUrl = $protocol . '://' . $host;
+		if (substr($baseUrl, -1)=='/') 
+		{
+			$baseUrl = substr($baseUrl, 0, strlen($baseUrl)-1);
+		}
+	
+	return $baseUrl;
+	}
+	
+	public function validate_new_password($password,$new_password,$id)
+	{
+		if($password != $new_password)
+		{
+			$type=5;
+			$this->message($type);
+			return false;
+		}
+		elseif($password == '' OR $new_password == '' )
+		{
+			$type=3;
+			$this->message($type);
+			return false;
+		}
+		else
+		{
+		
+			DB::update('accounts')->set (array('password'=>md5($password)))
+			->where('id','=',$id)->execute();
+			
+			$type=9;
+			$this->message($type);
+			
+			return true;
+		}
+	}
+	
+	public function message($type)
+	{
+		switch($type)
+		{
+			case 1:
+				echo '<font color =red>'.'Email does not exists'.'</font>';
+				break;
+				
+			case 2:	
+				echo '<font color =red>'.'Answer to secret question does not match in the database'.'</font>';
+				break;
+				
+			case 3:	
+				echo '<font color =red>'.'Fill in Missing Fields'.'</font>';
+				break;
+			
+			case 4:
+				echo '<font color =red>'.'Invalid Username and Password'.'</font>';
+				break;
+			
+			case 5:
+				echo '<font color =red>'.'Password does not match'.'</font>';
+				break;
+				
+			case 6:
+				echo '<font color =red>'.'Username already exists in the database'.'</font>';
+				break;	
+			
+			case 7:
+				echo '<font color =red>'.'Email already exists in the database'.'</font>';
+				break;	
+				
+			case 8:
+				?>
+					<script>
+						alert('An mail is sent to your email address');
+						window.location = '../mycardlist';
+					</script>
+				<?php
+				break;	
+
+			case 9:
+				echo 'Password changed successfully, please sign in.';
+				break;			
+		}
 	}
 
 } 

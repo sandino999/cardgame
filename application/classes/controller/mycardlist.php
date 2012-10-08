@@ -2,6 +2,7 @@
 
 class Controller_MyCardList extends Controller {
 	
+	
 	public function __construct(Request $request,Response $response)
 	{
 		parent::__construct($request,$response);
@@ -10,8 +11,7 @@ class Controller_MyCardList extends Controller {
 		
 	public function action_index()
 	{	  	
-	   $this->response->body($this->login);
-	   
+	  $this->response->body($this->login); 	
 	}
-			
+				
 } 

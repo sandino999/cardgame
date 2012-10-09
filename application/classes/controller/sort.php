@@ -14,23 +14,23 @@ class Controller_Sort extends Controller {
 	{
 		if(isset($_GET['btnsort']))
 		{
-		  if($_GET['select_sort']==0)
+		  if($_GET['select_sort']=='')
 		  {
 		    $this->action_default();
 		  }
-		  elseif($_GET['select_sort']==1)
+		  elseif($_GET['select_sort']=='Str Asc')
 		  {
 		    $this->str_ascending();
 		  }
-		  elseif($_GET['select_sort']==2)
+		  elseif($_GET['select_sort']=='Str Desc')
 		  {
 		    $this->str_descending();
 		  }
-		  elseif($_GET['select_sort']==3)
+		  elseif($_GET['select_sort']=='Def Asc')
 		  {
 		    $this->def_ascending();
 		  }
-		  elseif($_GET['select_sort']==4)
+		  elseif($_GET['select_sort']=='Def Desc')
 		  {
 		    $this->def_descending();
 		  }

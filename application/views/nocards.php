@@ -7,6 +7,8 @@
 
 <?php
 
+
+
 echo html::anchor('index.php/mycardlist','[Logout]');
 
 echo '<h1> My Card List </h1>'; 

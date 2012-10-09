@@ -13,21 +13,23 @@ class Controller_Accounts extends Controller{
 		$this->secret_question = view::factory('secret_question');
 		$this->email_not_exists_view = view::factory('email_not_exists');
 		$this->secret_question = view::factory('secret_question');
-		$this->nocards = view::factory('nocards');
+		$this->no_cards = view::factory('nocards');
 		$this->pass_send = view::factory('password_sent');
 		$this->wrong_secret_ans = view::factory('messages/wrong_secret_answer');
 		$this->display = view::factory('cardview');
 		$this->change_password = view::factory('change_password');
+		$this->change_password2 = view::factory('change_password2');
 	}
 	
 	public function action_login()
 	{
-	
 		$username=$_POST['txtuser'];
 		$password=$_POST['txtpass'];
 		
 		$id = $this->model->login($username,$password);
-		   
+		$message = $this->model->get_error_message_for_login($username,$password);   
+		$this->login->bind('message',$message);
+		
 		if($id == false)
 		{
 			$this->response->body($this->login);
@@ -42,6 +44,8 @@ class Controller_Accounts extends Controller{
 	
 	public function action_register()
 	{
+		$message=null;
+		$this->regview->bind('message',$message);
 		$this->response->body($this->regview);
 	}
 	
@@ -59,28 +63,26 @@ class Controller_Accounts extends Controller{
 		$addr=$_POST['txtaddr'];
 		$email=$_POST['txtemail'];
 			
-		$confirm_register = $this->register($fname,$mname,$lname,$user,$pass,$retype,$secret,$ans,
+		$this->register($fname,$mname,$lname,$user,$pass,$retype,$secret,$ans,
 											$contact,$addr,$email);	
-
-		if($confirm_register == true)
-		{
-			$this->response->body($this->login);
-		}
 		
 	}
 	
 	
 	public function action_forgot_password()
-	{
+	{	
+		$message=null;
+		$this->forgot->bind('message',$message);
 		$this->response->body($this->forgot);
 	}
 	
 	public function register($fname,$mname,$lname,$user,$pass,$retype,$secret,$ans,$contact,$addr,$email)
 	{
 		$return = $this->model->register($fname,$mname,$lname,$user,$pass,$retype,$secret,$ans,$contact,$addr,$email);
-		    
-		if($return == false)
-		{
+		
+		if($return != null)
+		{	
+			$this->regview->bind('message',$return);
 			$this->response->body($this->regview);
 		}
 	}
@@ -92,14 +94,14 @@ class Controller_Accounts extends Controller{
 		if($card_owning==true)
 		{
 			$initial_display = $this->model->get_list($id);
-			$view = $this->display->bind('card_list',$initial_display);
+			$view = $this->display->bind('card_list',$initial_display)->bind('id',$id);
 			$this->response->body($this->display);
 		}
 		else
-		{
-			$this->response->body($this->nocards);	
-		}
-			
+		{	
+			$this->no_cards->bind('id',$id);
+			$this->response->body($this->no_cards);	
+		}	
 	}
 	
 	public function action_secret_question()
@@ -107,19 +109,20 @@ class Controller_Accounts extends Controller{
 		$session=Session::instance();
 		$session->set('email',$_POST['txtemail']);
 	
-		 
 		$check = $this->model->check_if_email_exists($_POST['txtemail']);
 			
 		if($check == false)
 		{
 			$type=1;
 			$message = $this->model->message($type);
+			$this->forgot->bind('message',$message);
 			$this->response->body($this->forgot);		
 		}
 		else
 		{
+			$message=null;
 			$secret_question = $this->model->get_secret_question($_POST['txtemail']);
-			$this->secret_question->bind('secret',$secret_question);
+			$this->secret_question->bind('secret',$secret_question)->bind('message',$message);
 			$this->response->body($this->secret_question);
 		}
 	}
@@ -130,17 +133,16 @@ class Controller_Accounts extends Controller{
 			
 			if($result == true )
 			{
-				$this->model->send_password($_POST['email']);
-					
+				$this->model->send_password($_POST['email']);	
 			}
 			else
 			{
 				$type=2;
-				$this->model->message($type);
+				$message = $this->model->message($type);
 				
 				$email = session::instance()->get('email');
 				$secret_question = $this->model->get_secret_question($email);
-				$this->secret_question->bind('secret',$secret_question);
+				$this->secret_question->bind('secret',$secret_question)->bind('message',$message);
 				$this->response->body($this->secret_question);
 				
 			}
@@ -154,22 +156,24 @@ class Controller_Accounts extends Controller{
 	
 	public function action_validate_password()
 	{
-	
 		$id = $this->request->param('id');
+		$password = $_POST['password'];
+		$confirm_password = $_POST['confirmpassword'];
 			
-		$validate = $this->model->validate_new_password($_POST['password'],$_POST['confirmpassword'],$id);
+		$message = $this->model->validate_new_password($password,$confirm_password,$id);
+		 $message;
 		
-		if($validate == false)
+		if($message != null)
 		{
-			$this->change_password->bind('id',$id);
-			$this->response->body($this->change_password);	
+			$this->change_password2->bind('id',$id)->bind('message',$message);
+			$this->response->body($this->change_password2);	
+		
 		}
 		else
-		{
-		
-		}
-	
-		
+		{	
+			$this->model->reset_password($id,$password);
+			
+		}	
 	}
 	
 } 

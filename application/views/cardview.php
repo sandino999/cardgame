@@ -3,13 +3,19 @@
 ?>
 
 <html>
+	<head>
+		<title>
+			Card View
+		</title>
+		<link href="<?php echo url::base(); ?>bootstrap/css/bootstrap.css" rel="stylesheet">
+	</head>
 	<body>
 
 <?php
 
 	echo html::anchor('index.php/mycardlist','[Logout]');
 
-	echo form::open('submit',array('method'=>'post'));
+	echo form::open('buy',array('method'=>'post'));
 	echo form::submit('btnbuy','Buy Cards');
 	echo form::close();
 
@@ -17,14 +23,14 @@
 
 		echo form::open('sort',array('method'=>'get'));
 
-		echo form::select('select_sort',array(
-				 '0'=>' ',
-				 '1'=>'Strength Asc',
-				 '2'=>'Strength Desc',
-				 '3'=>'Defense Asc',
-				 '4'=>'Defense Desc')
+		 echo form::select('select_sort',array(
+				 ''=>' ',
+				 'Str Asc'=>'Strength Asc',
+				 'Str Desc'=>'Strength Desc',
+				 'Def Asc'=>'Defense Asc',
+				 'Def Desc'=>'Defense Desc')
 			 );
-		 
+			  
 		echo form::submit('btnsort','Sort');				 
 
 		echo '<br/><br/>';				 	

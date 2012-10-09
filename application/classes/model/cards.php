@@ -85,31 +85,32 @@ class Model_cards extends Model_Database {
 		if($fname == '' OR $mname =='' OR $lname == '' OR $user == '' OR $pass == '' OR $retype == '' 
 		OR $secret  == '' OR $ans  == '' OR $contact  == '' OR $addr  == '' OR $email == '')  // if fields are missing
 		{	
-			$type=3;
-			$this->message($type);
 			
-			return false;
+			$type=3;
+			return  $this->message($type);
+			
+			
+			
 		}
 		else if($pass!=$retype)   // if password is not equal to retype password
 		{
 			$type=5;
-			$this->message($type);
+			return $this->message($type);
 			
-			return false;
+			
 		}
 		else if($usernamedb == true)   //check if username exists
 		{
 			$type=6;
-			$this->message($type);
+			return $this->message($type);
 			
-			return false;
 		}
 		else if($maildb == true)		// check if email exists in the database
 		{	
 			$type=7;
-			$this->message($type);
+			return $this->message($type);
 			
-			return false;
+			
 		}
 		else
 		{
@@ -130,6 +131,7 @@ class Model_cards extends Model_Database {
 			}
 			</script>
 			<?php
+			return null;
 		}	
 	}
 	
@@ -148,7 +150,6 @@ class Model_cards extends Model_Database {
 	
 	public function login($username,$passwd)
 	{
-	
 		$id = $this->confirm_username_password($username,$passwd);  //check if username and password match 
 		
 		if($username == '' OR $passwd == '')   // check if username and password is blank
@@ -168,6 +169,27 @@ class Model_cards extends Model_Database {
 			
 			return false;
 		}		
+	}
+	
+	public function get_error_message_for_login($username,$passwd)
+	{
+		$id = $this->confirm_username_password($username,$passwd);
+		
+		if($username == '' OR $passwd == '')   
+		{
+			$type=3;
+			return $this->message($type);
+			
+		}
+		else if($id > 0)	
+		{
+			return null;
+		}
+		else			
+		{
+			$type=4;
+			return $this->message($type);		
+		}	
 		
 	}
 	
@@ -219,6 +241,7 @@ class Model_cards extends Model_Database {
 	public function check_if_email_exists($email)
 	{
 	  $query = db::select()->from('accounts')->execute(); 
+	  
 	  foreach($query as $row)
 	  {
 		if($row['email'] == $email)
@@ -286,58 +309,62 @@ class Model_cards extends Model_Database {
 		if($password != $new_password)
 		{
 			$type=5;
-			$this->message($type);
-			return false;
+			return $this->message($type);
+			
 		}
 		elseif($password == '' OR $new_password == '' )
 		{
 			$type=3;
-			$this->message($type);
-			return false;
+			return $this->message($type);
+		
 		}
 		else
 		{
-		
-			DB::update('accounts')->set (array('password'=>md5($password)))
-			->where('id','=',$id)->execute();
-			
-			$type=9;
-			$this->message($type);
-			
-			return true;
+			return null;
 		}
 	}
+	
+	public function reset_password($id,$password)
+	{
+		DB::update('accounts')->set (array('password'=>md5($password)))
+		->where('id','=',$id)->execute();
+			
+		$type=9;
+		$this->message($type);
+	}
+		
 	
 	public function message($type)
 	{
 		switch($type)
 		{
 			case 1:
-				echo '<font color =red>'.'Email does not exists'.'</font>';
+				return 'Email does not exists';
 				break;
 				
 			case 2:	
-				echo '<font color =red>'.'Answer to secret question does not match in the database'.'</font>';
+				return 'Answer to secret question does not match in the database';
 				break;
 				
 			case 3:	
-				echo '<font color =red>'.'Fill in Missing Fields'.'</font>';
+				
+				return 'Fill in Missing Fields';
 				break;
 			
 			case 4:
-				echo '<font color =red>'.'Invalid Username and Password'.'</font>';
+				return 'Invalid Username and Password';
 				break;
 			
 			case 5:
-				echo '<font color =red>'.'Password does not match'.'</font>';
+				return 'Password does not match';
 				break;
 				
 			case 6:
-				echo '<font color =red>'.'Username already exists in the database'.'</font>';
+				return 'Username already exists in the database';
 				break;	
 			
 			case 7:
-				echo '<font color =red>'.'Email already exists in the database'.'</font>';
+				return 'Email already exists in the database';
 				break;	
 				
 			case 8:

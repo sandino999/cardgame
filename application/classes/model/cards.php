@@ -76,63 +76,43 @@ class Model_cards extends Model_Database {
 		return $results;
 	}
 	
-	public function register($fname,$mname,$lname,$user,$pass,$retype,$secret,$ans,$contact,$addr,$email)
+	public function validate_register($fname,$mname,$lname,$user,$pass,$retype,$secret,$ans,$contact,$addr,$email)
 	{
 	 
 		$usernamedb = $this->check_user_name_if_exists($user);  // function for checking if username exists
-		$maildb = $this->check_if_email_exists($email);  // function for checking if email already exists
+		$maildb = $this->validate_email($email);  // function for checking if email already exists
 		
 		if($fname == '' OR $mname =='' OR $lname == '' OR $user == '' OR $pass == '' OR $retype == '' 
 		OR $secret  == '' OR $ans  == '' OR $contact  == '' OR $addr  == '' OR $email == '')  // if fields are missing
-		{	
-			
+		{			
 			$type=3;
-			return  $this->message($type);
-			
-			
-			
+			return  $this->message($type);	
 		}
 		else if($pass!=$retype)   // if password is not equal to retype password
 		{
 			$type=5;
-			return $this->message($type);
-			
-			
+			return $this->message($type);		
 		}
 		else if($usernamedb == true)   //check if username exists
 		{
 			$type=6;
-			return $this->message($type);
-			
+			return $this->message($type);	
 		}
 		else if($maildb == true)		// check if email exists in the database
 		{	
 			$type=7;
-			return $this->message($type);
-			
-			
+			return $this->message($type);		
 		}
 		else
-		{
-			?>
-			<script type='text/javascript'>
-			
-			var answer = confirm('Register?');
-		
-			if(answer)
-			{
-			<?php
-			
-				DB::insert('accounts',array('username','password','secret_question','answer','firstname','middlename','surname','contact_no','address','email'))
-				->values(array($user,MD5($pass),$secret,$ans,$fname,$mname,$lname,$contact,$addr,$email))->execute();
-			?>
-				alert('Record Added');
-				window.location = '../mycardlist';
-			}
-			</script>
-			<?php
+		{	
 			return null;
 		}	
+	}
+	
+	public function register_to_db($fname,$mname,$lname,$user,$pass,$retype,$secret,$ans,$contact,$addr,$email)
+	{		
+		DB::insert('accounts',array('username','password','secret_question','answer','firstname','middlename','surname','contact_no','address','email'))
+		->values(array($user,MD5($pass),$secret,$ans,$fname,$mname,$lname,$contact,$addr,$email))->execute();		
 	}
 	
 	public function check_user_name_if_exists($user)
@@ -210,8 +190,8 @@ class Model_cards extends Model_Database {
 	public function send_password($email)
 	{
 		$to = $email;
-		$from ='sandino.dolosa@beenest-tech.com';
-		$subject='Subject';	
+		$from ='mycardlist.email@gmail.com';
+		$subject='Password Reset';	
 		
 		$id = $this->get_account_id($email);
 		$server_name = $this->get_server_name();
@@ -224,8 +204,6 @@ class Model_cards extends Model_Database {
 			
 		email::send($to,$from,$subject,$message);	 
 
-		$type=8;
-		$this->message($type);
 	}
 	
 	public function get_password($email)
@@ -238,7 +216,7 @@ class Model_cards extends Model_Database {
 		}
 	}
 	
-	public function check_if_email_exists($email)
+	public function validate_email($email)
 	{
 	  $query = db::select()->from('accounts')->execute(); 
 	  
@@ -273,8 +251,6 @@ class Model_cards extends Model_Database {
 		
 		return false;
 	}
-	
-	
 	
 	public function get_account_id($email)
 	{
@@ -332,7 +308,41 @@ class Model_cards extends Model_Database {
 		$type=9;
 		$this->message($type);
 	}
-		
+	
+	public function validate_id_if_logged($id)
+	{
+		if($id==null)
+		{
+		  return false;
+		}
+		else
+		{
+		  return true;
+		}
+	}
+	
+	public function buy_cards($card_name,$id)
+	{
+		$query = db::select()->from('account_cards')
+		->where('account_owning_id','=',$id)->where('card_owning_name','=',$card_name)
+		->execute();
+				
+		if(count($query)==0)	// check if there is query
+		{
+			db::insert('account_cards',array('account_owning_id','card_owning_name','owning'))
+			->values(array($id,$card_name,1))->execute();	// add new type of card for the account
+		}
+		else
+		{
+			foreach($query as $row)
+			{	
+				$row['owning']++;		
+				db::update('account_cards')->set(array('owning'=>$row['owning']))
+				->where('account_owning_id','=',$id)->where('card_owning_name','=',$card_name)
+				->execute();		// add + 1 card to previous card owning
+			}
+		}		
+	}
 	
 	public function message($type)
 	{
@@ -378,6 +388,10 @@ class Model_cards extends Model_Database {
 
 			case 9:
 				echo 'Password changed successfully, please sign in.';
+				break;	
+
+			case 10:
+				return 'You are not logged in, please log in to continue';
 				break;			
 		}
 	}

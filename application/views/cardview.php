@@ -1,5 +1,7 @@
 <?php defined('SYSPATH') or die('No direct script access.');
+	
 
+	
 ?>
 
 <html>
@@ -12,8 +14,9 @@
 	<body>
 
 <?php
-
-	echo html::anchor('index.php/mycardlist','[Logout]');
+	
+	echo 'Welcome <font color=green>'.session::instance()->get('username').'</font><br/>';
+	echo html::anchor('index.php/accounts/logout','[Logout]');
 
 	echo form::open('buy',array('method'=>'post'));
 	echo form::submit('btnbuy','Buy Cards');
@@ -30,10 +33,11 @@
 				 'Def Asc'=>'Defense Asc',
 				 'Def Desc'=>'Defense Desc')
 			 );
-			  
-		echo form::submit('btnsort','Sort');				 
-
-		echo '<br/><br/>';				 	
+		
+		echo "<div style='position:relative; top:-38;height:0px;left:230'>";
+		echo form::submit('btnsort','Sort');				
+		echo '<br/><br/>';
+		echo '</div>';		
 
 		foreach($card_list as $cards) 
 		{  

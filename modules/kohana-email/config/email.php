@@ -13,8 +13,8 @@ return array(
         'port'       => 465,
         'timeout'    => 10,
         'encryption' => 'ssl',
-        'username'   => 'sandino.dolosa@beenest-tech.com',
-        'password'   => 'luna1700',
+        'username'   => 'mycardlist.email@gmail.com',
+        'password'   => 'cardlist',
     ),
 
 	

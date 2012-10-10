@@ -9,6 +9,10 @@
 	</head>
 	<body>
 		<div style="position:relative; top:200;height:0px;left:700">
+			<div class="container-fluid">  	
+			  <div class="row-fluid"> .
+				  <div class="span3">  
+				    <div class="well sidebar-nav"> 
 <?php
 			
 			echo "	<h1> Fill in the necessary fields </h1>";
@@ -33,17 +37,19 @@
 			echo 'Contact No '.form::input('txtcontact').'<br/>';
 			echo 'Address '.form::input('txtaddr').'<br/>';
 			echo 'Email Address '.form::input('txtemail').'<br/>';
-			echo form::submit('btnregistertodatabase','Register');
+			?><input type='submit' value='Register' name='btnregistertodatabase' class='btn btn-primary' ><?php
 			echo form::close();
 		
-			echo "<div style='position:relative; top:-46;left:75'>";
+			echo "<div style='position:relative; top:-50;left:85'>";
 			echo form::open('mycardlist',array('method'=>'post'));
-			echo form::submit('btnback','Back');
+			?><input type='submit' value='Back' name='btnback' class='btn btn-primary' ><?php
 			echo form::close();
 			echo '</div>';
 			
 
 ?>	
+				</div>
+			</div>
 		</div>
 	</body>
 </html>

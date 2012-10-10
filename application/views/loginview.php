@@ -7,23 +7,28 @@
 		</title>
 		<link href="<?php echo url::base(); ?>bootstrap/css/bootstrap.css" rel="stylesheet">		
 	</head>
-	
-	<body>
-		<div style='position:relative; top:200;height:0px;left:700'> 
-		<h1> MyCardList Login </h1>
 		
-<?php
+	<body>	
+		<div style='position:relative; top:200;height:0px;left:700'> 
+		  <div class="container-fluid">  	
+			  <div class="row-fluid"> .
+				  <div class="span3">  
+				    <div class="well sidebar-nav"> 
+						<h1> MyCardList Login </h1>		
+										    
+<?php	
+	
 		echo '<font color =red>'.$message.'</font>';
 		echo form::open('accounts/login',array('method'=>'post'));
 		echo 'Username: '.form::input('txtuser').'<br/>';
 		echo 'Password: '.form::password('txtpass').'<br/>';
-		echo form::submit('btnlogin','Login');
+		?> <input type='submit' name='btnlogin' value='Login' class='btn btn-primary'> <?php
 	
 		echo form::close();
 	
-		echo "<div style='position:relative; top:-46;height:0px;left:55'>";
+		?><div style='position:relative; top:-50;height:0px;left:70'><?php
 		echo form::open('accounts/register',array('method'=>'post'));
-		echo form::submit('btnregister','Register');
+		?><input type='submit' name='btnregister' value='Register' class='btn btn-primary'> <?php	
 		echo form::close();
 		echo '</div>';
 		
@@ -33,8 +38,11 @@
 		
 		
 ?>		
+					
+				  </div>
+				</div>	
+		</div>
 	
-		</div>	
 
 		
 	</body>

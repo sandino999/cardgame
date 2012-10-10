@@ -7,14 +7,39 @@ class Controller_MyCardList extends Controller {
 	{
 		parent::__construct($request,$response);
 		$this->login= view::factory('loginview');
+		$this->id = session::instance()->get('id');
+		$this->display = view::factory('cardview');
+		$this->model = model::factory('cards');
+		$this->no_cards = view::factory('nocards');
+		$this->confirm_buy = view::factory('confirm_buy');
 	
 	}
 		
 	public function action_index()
 	{
-	  $message=null;
-	  $this->login->bind('message',$message);
-	  $this->response->body($this->login); 	
+		if($this->id!=null)		// checks if user is still logged
+		{
+			$card_owning = $this->model->check_card_owning($this->id);
+			
+			if($card_owning==true)
+			{
+				$initial_display = $this->model->get_list($this->id);
+				$view = $this->display->bind('card_list',$initial_display)->bind('id',$this->id);
+				$this->response->body($this->display);
+			}
+			else
+			{	
+				$this->no_cards->bind('id',$this->id);
+				$this->response->body($this->no_cards);	
+			}
+		
+		}	// else redirects to login page
+		else
+		{
+			$message=null;
+			$this->login->bind('message',$message);
+			$this->response->body($this->login); 	
+		}
 	}
 				
 } 

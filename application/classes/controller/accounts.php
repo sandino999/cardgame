@@ -14,18 +14,19 @@ class Controller_Accounts extends Controller{
 		$this->email_not_exists_view = view::factory('email_not_exists');
 		$this->secret_question = view::factory('secret_question');
 		$this->no_cards = view::factory('nocards');
-		$this->pass_send = view::factory('password_sent');
+		$this->pass_send = view::factory('messages/password_sent');
 		$this->wrong_secret_ans = view::factory('messages/wrong_secret_answer');
 		$this->display = view::factory('cardview');
 		$this->change_password = view::factory('change_password');
-		$this->change_password2 = view::factory('change_password2');
+		$this->register_success = view::factory('messages/register_succesful');
+		
 	}
 	
 	public function action_login()
 	{
 		$username=$_POST['txtuser'];
 		$password=$_POST['txtpass'];
-		
+			
 		$id = $this->model->login($username,$password);
 		$message = $this->model->get_error_message_for_login($username,$password);   
 		$this->login->bind('message',$message);
@@ -36,11 +37,25 @@ class Controller_Accounts extends Controller{
 		}
 		else
 		{
-			session::instance()->set('id',$id);		  		   
+			session::instance()->set('username',$username);
+			session::instance()->set('id',$id);
 			$this->check_owning($id);
 		}
 	}
 	
+	public function action_logout()
+	{
+		session::instance()->destroy();
+		$this->request->redirect('index.php/mycardlist');
+	}	
+	
+	public function action_not_logged()
+	{
+		$type=10;
+		$error_message = $this->model->message($type);
+		$this->login->bind('message',$error_message);
+		$this->response->body($this->login);
+	}
 	
 	public function action_register()
 	{
@@ -64,8 +79,7 @@ class Controller_Accounts extends Controller{
 		$email=$_POST['txtemail'];
 			
 		$this->register($fname,$mname,$lname,$user,$pass,$retype,$secret,$ans,
-											$contact,$addr,$email);	
-		
+											$contact,$addr,$email);		
 	}
 	
 	
@@ -78,12 +92,17 @@ class Controller_Accounts extends Controller{
 	
 	public function register($fname,$mname,$lname,$user,$pass,$retype,$secret,$ans,$contact,$addr,$email)
 	{
-		$return = $this->model->register($fname,$mname,$lname,$user,$pass,$retype,$secret,$ans,$contact,$addr,$email);
+		$error_message = $this->model->validate_register($fname,$mname,$lname,$user,$pass,$retype,$secret,$ans,$contact,$addr,$email);
 		
-		if($return != null)
+		if($error_message != null)
 		{	
-			$this->regview->bind('message',$return);
+			$this->regview->bind('message',$error_message);
 			$this->response->body($this->regview);
+		}
+		else
+		{
+			$this->model->register_to_db($fname,$mname,$lname,$user,$pass,$retype,$secret,$ans,$contact,$addr,$email);
+			$this->response->body($this->register_success);
 		}
 	}
 	
@@ -109,9 +128,9 @@ class Controller_Accounts extends Controller{
 		$session=Session::instance();
 		$session->set('email',$_POST['txtemail']);
 	
-		$check = $this->model->check_if_email_exists($_POST['txtemail']);
+		$validate = $this->model->validate_email($_POST['txtemail']);
 			
-		if($check == false)
+		if($validate == false)
 		{
 			$type=1;
 			$message = $this->model->message($type);
@@ -129,11 +148,12 @@ class Controller_Accounts extends Controller{
 	
 	public function action_confirm_secret_question()
 	{
-		$result = $this->model->confirm_secret_question_ans($_POST['txtsecret'],$_POST['email']);	
+		$validate = $this->model->confirm_secret_question_ans($_POST['txtsecret'],$_POST['email']);	
 			
-			if($result == true )
+			if($validate == true )
 			{
 				$this->model->send_password($_POST['email']);	
+				$this->response->body($this->pass_send);
 			}
 			else
 			{
@@ -150,7 +170,8 @@ class Controller_Accounts extends Controller{
 	
 	public function action_change_password($id)
 	{	
-		$this->change_password->bind('id',$id);
+		$message=null;
+		$this->change_password->bind('id',$id)->bind('message',$message);
 		$this->response->body($this->change_password);		
 	}
 	
@@ -160,19 +181,17 @@ class Controller_Accounts extends Controller{
 		$password = $_POST['password'];
 		$confirm_password = $_POST['confirmpassword'];
 			
-		$message = $this->model->validate_new_password($password,$confirm_password,$id);
-		 $message;
-		
-		if($message != null)
+		$error_message = $this->model->validate_new_password($password,$confirm_password,$id);
+			
+		if($error_message != null)
 		{
-			$this->change_password2->bind('id',$id)->bind('message',$message);
-			$this->response->body($this->change_password2);	
+			$this->change_password->bind('id',$id)->bind('message',$error_message);
+			$this->response->body($this->change_password);	
 		
 		}
 		else
 		{	
-			$this->model->reset_password($id,$password);
-			
+			$this->model->reset_password($id,$password);	
 		}	
 	}
 	

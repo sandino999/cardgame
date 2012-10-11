@@ -26,7 +26,7 @@ include('header_main.php');
 
 		echo '<h1> My Card List </h1>'; 
 
-		echo form::open('sort',array('method'=>'get'));
+		echo form::open('user',array('method'=>'get'));
 
 		 echo form::select('select_sort',array(
 				 ''=>' ',
@@ -37,7 +37,7 @@ include('header_main.php');
 			 );
 
 		echo "<div style='position:relative; top:-38;height:0px;left:230'>";
-		echo form::submit('btnsort','Sort');				
+		?><input type='submit' value='Sort' class='btn btn-info'> <?php				
 		echo '<br/><br/>';
 		echo '</div>';		
 

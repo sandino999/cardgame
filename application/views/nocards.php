@@ -1,5 +1,5 @@
 <?php defined('SYSPATH') or die('No direct script access.');
-
+include('header_main.php');	
 ?>
 
 <html>
@@ -11,22 +11,30 @@
 	</head>
 	<body>
 	
+	<div style="position:relative; top:50;height:0px;left:0">	
+		<div class="container-fluid">  	
+			  <div class="row-fluid">
+				  <div class="span 5">  
+				    <div class="well sidebar-nav"> 
+	
 <?php
 
-
 echo 'Welcome <font color=green>'.session::instance()->get('username').'</font><br/>';
-echo html::anchor('index.php/accounts/logout','[Logout]');
 
 echo '<h1> My Card List </h1>'; 
 
   
   echo form::open('buy');
   echo '<b> You have 0 cards in your account. Would you like to buy one? </b>';
-  echo form::submit('btnbuy','Buy');
+  ?> <input type='submit' value='buy' class='btn btn-primary'> <?php
   echo form::close();
 
 ?>
-
+					</div>
+				</div>	
+			</div>
+		</div>	
+	</div>
 	</body>
 </html>
 

@@ -90,6 +90,12 @@ class Controller_Accounts extends Controller{
 		$this->response->body($this->forgot);
 	}
 	
+	public function action_user()
+	{
+		$id = session::instance()->get('id');
+		$this->check_owning($id);
+	}
+	
 	public function register($fname,$mname,$lname,$user,$pass,$retype,$secret,$ans,$contact,$addr,$email)
 	{
 		$error_message = $this->model->validate_register($fname,$mname,$lname,$user,$pass,$retype,$secret,$ans,$contact,$addr,$email);
@@ -107,7 +113,7 @@ class Controller_Accounts extends Controller{
 	}
 	
 	public function check_owning($id)
-	{
+	{	
 		$card_owning = $this->model->check_card_owning($id);
 		
 		if($card_owning==true)

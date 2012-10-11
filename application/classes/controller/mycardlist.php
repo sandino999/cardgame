@@ -17,6 +17,19 @@ class Controller_MyCardList extends Controller {
 		
 	public function action_index()
 	{
+		$this->model->get_server_name();
+		$this->check_if_logged();
+		
+	}
+	
+	public function get_server()
+	{
+		$server_name = $this->model->get_server_name();
+		session::instance()->set('server');
+	}
+	
+	public function check_if_logged()
+	{	
 		if($this->id!=null)		// checks if user is still logged
 		{
 			$card_owning = $this->model->check_card_owning($this->id);

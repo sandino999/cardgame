@@ -1,4 +1,4 @@
-
+<?php	include('header.php');	 ?>
 
 <html>
 	<head>
@@ -6,16 +6,19 @@
 			My Card List
 		</title>
 		<link href="<?php echo url::base(); ?>bootstrap/css/bootstrap.css" rel="stylesheet">		
-	</head>
-		
+	</head>	
 	<body>	
-		<div style='position:relative; top:200;height:0px;left:700'> 
-		  <div class="container-fluid">  	
-			  <div class="row-fluid"> .
-				  <div class="span3">  
-				    <div class="well sidebar-nav"> 
-						<h1> MyCardList Login </h1>		
-										    
+	
+	
+	
+		<div style='position:relative; top:250;height:0px;left:700'> 			
+			<div class="container-fluid">  	
+				<div class="row-fluid"> 
+					<div class="span3">  
+						<div class="well sidebar-nav"> 
+							<h1> MyCardList Login </h1>
+						
+			
 <?php	
 	
 		echo '<font color =red>'.$message.'</font>';
@@ -37,13 +40,14 @@
 		echo '</div>';
 		
 		
-?>		
-					
-				  </div>
+?>									
+						</div>
+					</div>
 				</div>	
+			</div>	
 		</div>
 	
-
+	
 		
 	</body>
 </html>

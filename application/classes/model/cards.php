@@ -29,11 +29,9 @@ class Model_cards extends Model_Database {
 			{
 				return true;
 			}
-			else
-			{
-				return false;
-			}
-	  }
+			
+		}
+		return false;
 	}
 		
 	public function str_ascending($id)

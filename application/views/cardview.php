@@ -37,7 +37,7 @@ include('header_main.php');
 			 );
 
 		echo "<div style='position:relative; top:-38;height:0px;left:230'>";
-		?><input type='submit' value='Sort' class='btn btn-info'> <?php				
+		?><input type='submit' value='Sort' name='btnsort' class='btn btn-info'> <?php				
 		echo '<br/><br/>';
 		echo '</div>';		
 

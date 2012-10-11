@@ -8,7 +8,7 @@ class Model_cards extends Model_Database {
 	{	
 		$results=DB::select()->from('account_cards')->join('cards')
 		->on('account_cards.card_owning_name','=','cards.card_name')
-		->where('account_cards.account_owning_id','=',$id)->execute();
+		->where('account_cards.account_owning_id','=',$id)->order_by('card_owning_name')->execute();
 		
 		return $results;	
 	}

@@ -12,7 +12,6 @@ class Controller_MyCardList extends Controller {
 		$this->model = model::factory('cards');
 		$this->no_cards = view::factory('nocards');
 	
-	
 	}
 		
 	public function action_index()

@@ -6,7 +6,7 @@ include('header.php');
 		<title>
 			Change Password
 		</title>
-		<link href="http://localhost<?php echo url::base(); ?>bootstrap/css/bootstrap.min.css" rel="stylesheet">
+		<link href="<?php echo session::instance()->get('server').url::base(); ?>bootstrap/css/bootstrap.min.css" rel="stylesheet">
 	</head>
 	<body>
 		<div style="position:relative; top:200;height:0px;left:700"> 

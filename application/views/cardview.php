@@ -48,11 +48,11 @@ include('header_main.php');
  
  
  ?>
-					</div>
-				</div>	
-			</div>
-		</div>	
-	</div>
+						</div>
+					</div>	
+				</div>
+			</div>	
+		</div>
 	</body>
 </html>	
 

@@ -19,11 +19,6 @@ include('header_main.php');
 						<div class="well sidebar-nav"> 
 <?php
 
-	echo 'Welcome <font color=green>'.session::instance()->get('username').'</font><br/>';
-
-
-	
-
 		echo '<h1> My Card List </h1>'; 
 
 		echo form::open('user',array('method'=>'get'));

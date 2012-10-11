@@ -11,7 +11,7 @@ class Controller_MyCardList extends Controller {
 		$this->display = view::factory('cardview');
 		$this->model = model::factory('cards');
 		$this->no_cards = view::factory('nocards');
-		$this->confirm_buy = view::factory('confirm_buy');
+	
 	
 	}
 		

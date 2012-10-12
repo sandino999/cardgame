@@ -19,7 +19,7 @@
 					<div class="nav-collapse">  
 						<ul class="nav">  
 												<li><a><?php echo 'Welcome <font color=blue>'.session::instance()->get('username'); ?></font></a></li>	
-						<li class="active"><?php echo html::anchor('index.php/user','Home') ?></li>  
+						<li><?php echo html::anchor('index.php/user','Home') ?></li>  
 						<!--<li><a href="#about">Buy Cards</a></li>  -->
 						<li><?php echo html::anchor('index.php/buy','Buy Cards') ?></li>
 						<li><?php echo html::anchor('index.php/accounts/logout','Logout') ?></li> 

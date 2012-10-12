@@ -22,9 +22,9 @@ include('/../header.php');
 		<div class="span4">  
 		<div class="alert alert-success">  
 		<a class="close" data-dismiss="alert"></a>  
-		<strong>Success!</strong> We've sent you an email. Please check your spam folder if the email doesn't appear within a few minutes 
+		<strong>Success!</strong> Password Changed Succesfully. Please Sign In
 		</div>  
-		<input class='btn btn-primary' onclick="parent.location='../mycardlist'" type='button' value='Click to Go to Main Page'></input>
+		<input class='btn btn-primary' onclick="parent.location='../../mycardlist'" type='button' value='Click to Go to Main Page'></input>
 		</div>  
 		</div>  
 		</div>  

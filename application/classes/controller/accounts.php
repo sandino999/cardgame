@@ -18,6 +18,7 @@ class Controller_Accounts extends Controller{
 		$this->wrong_secret_ans = view::factory('messages/wrong_secret_answer');
 		$this->display = view::factory('cardview');
 		$this->change_password = view::factory('change_password');
+		$this->password_reset = view::factory('messages/password_reset');
 		$this->register_success = view::factory('messages/register_succesful');
 		
 	}
@@ -198,6 +199,7 @@ class Controller_Accounts extends Controller{
 		else
 		{	
 			$this->model->reset_password($id,$password);	
+			$this->response->body($this->password_reset);
 		}	
 	}
 	

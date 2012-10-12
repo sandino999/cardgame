@@ -303,8 +303,8 @@ class Model_cards extends Model_Database {
 		DB::update('accounts')->set (array('password'=>md5($password)))
 		->where('id','=',$id)->execute();
 			
-		$type=9;
-		$this->message($type);
+		//$type=9;
+		//$this->message($type);
 	}
 	
 	public function validate_id_if_logged($id)

@@ -148,7 +148,7 @@ class Controller_Accounts extends Controller{
 		{
 			$message=null;
 			$secret_question = $this->model->get_secret_question($_POST['txtemail']);
-			$this->secret_question->bind('secret',$secret_question)->bind('message',$message);
+			$this->secret_question->bind('secret',$secret_question)->bind('message',$message)->bind('email',$_POST['txtemail']); // added code: bind('email',$_POST['txtemail']) 10/15/12
 			$this->response->body($this->secret_question);
 		}
 	}
@@ -169,7 +169,7 @@ class Controller_Accounts extends Controller{
 				
 				$email = session::instance()->get('email');
 				$secret_question = $this->model->get_secret_question($email);
-				$this->secret_question->bind('secret',$secret_question)->bind('message',$message);
+				$this->secret_question->bind('secret',$secret_question)->bind('message',$message)->bind('email',$_POST['email']); // added code: bind('email',$_POST['txtemail']) 10/15/12
 				$this->response->body($this->secret_question);
 				
 			}
@@ -184,21 +184,21 @@ class Controller_Accounts extends Controller{
 	
 	public function action_validate_password()
 	{
-		$id = $this->request->param('id');
+		$hash = $this->request->param('id');
 		$password = $_POST['password'];
 		$confirm_password = $_POST['confirmpassword'];
 			
-		$error_message = $this->model->validate_new_password($password,$confirm_password,$id);
+		$error_message = $this->model->validate_new_password($password,$confirm_password,$hash);
 			
 		if($error_message != null)
 		{
-			$this->change_password->bind('id',$id)->bind('message',$error_message);
+			$this->change_password->bind('id',$hash)->bind('message',$error_message);
 			$this->response->body($this->change_password);	
 		
 		}
 		else
 		{	
-			$this->model->reset_password($id,$password);	
+			$this->model->reset_password($hash,$password);	
 			$this->response->body($this->password_reset);
 		}	
 	}

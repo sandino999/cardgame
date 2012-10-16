@@ -4,6 +4,9 @@
 
 class Model_cards extends Model_Database {
 	
+	/* 
+		function get_list gets the lists of all cards by the user with the parameter id used 
+	*/
 	public function get_list($id)
 	{	
 		$results=DB::select()->from('account_cards')->join('cards')
@@ -13,11 +16,18 @@ class Model_cards extends Model_Database {
 		return $results;	
 	}
 	
+	/*
+		get_cards function selects all list of cards and their information
+	*/
 	public function get_cards()
 	{
 	  $result = db::select()->from('cards')->execute();
 	  return $result;
 	}
+	
+	/*
+		function check_card_owning checks if the user has cards existing in his account with id as parameter
+	*/
 	
 	public function check_card_owning($id)
 	{
@@ -33,6 +43,10 @@ class Model_cards extends Model_Database {
 		}
 		return false;
 	}
+	
+	/*
+		str_ascending : function for getting card list with strength ascending with id as parameter
+	*/
 		
 	public function str_ascending($id)
 	{
@@ -43,6 +57,10 @@ class Model_cards extends Model_Database {
 	 
 		return $results;
 	}
+	
+	/*
+		str_descending : function for getting card list with strength descending with id as parameter
+	*/
 
 	public function str_descending($id)
 	{
@@ -54,6 +72,10 @@ class Model_cards extends Model_Database {
 		return $results;
 	}
 	
+	/*
+		def_ascending : function for getting card list with defense ascending with id as parameter
+	*/
+	
 	public function def_ascending($id)
 	{
 		$results=DB::select()->from('account_cards')->join('cards')
@@ -64,6 +86,10 @@ class Model_cards extends Model_Database {
 		return $results;
 	}
 	
+	/*
+		def_descending : function for getting card list with defense descending with id as parameter
+	*/
+	
 	public function def_descending($id)
 	{
 		$results=DB::select()->from('account_cards')->join('cards')
@@ -73,6 +99,12 @@ class Model_cards extends Model_Database {
 		
 		return $results;
 	}
+	
+	/*
+		validate_register validates the registration fields when submit is done with
+		$fname,$mname,$lname,$user,$pass,$retype,$secret,$ans,$contact,$addr,$email
+		as its parameter
+	*/
 	
 	public function validate_register($fname,$mname,$lname,$user,$pass,$retype,$secret,$ans,$contact,$addr,$email)
 	{
@@ -107,11 +139,19 @@ class Model_cards extends Model_Database {
 		}	
 	}
 	
+	/*
+		register_to_db function registers the fields to database after validation
+	*/
+	
 	public function register_to_db($fname,$mname,$lname,$user,$pass,$retype,$secret,$ans,$contact,$addr,$email)
 	{		
-		DB::insert('accounts',array('username','password','secret_question','answer','firstname','middlename','surname','contact_no','address','email'))
-		->values(array($user,MD5($pass),$secret,$ans,$fname,$mname,$lname,$contact,$addr,$email))->execute();		
+		DB::insert('accounts',array('username','password','secret_question','answer','firstname','middlename','surname','contact_no','address','email','username_hash'))
+		->values(array($user,MD5($pass),$secret,$ans,$fname,$mname,$lname,$contact,$addr,$email,md5($user)))->execute();	// 10-16-12 : added username_hash column which contains hash username	
 	}
+	
+	/*
+		 checks username from database if it exists 
+	*/
 	
 	public function check_user_name_if_exists($user)
 	{
@@ -125,6 +165,10 @@ class Model_cards extends Model_Database {
 		}		
 	  }  
 	}
+	
+	/*
+		function login validates the input field username and password
+	*/
 	
 	public function login($username,$passwd)
 	{
@@ -149,6 +193,7 @@ class Model_cards extends Model_Database {
 		}		
 	}
 	
+	
 	public function get_error_message_for_login($username,$passwd)
 	{
 		$id = $this->confirm_username_password($username,$passwd);
@@ -171,6 +216,10 @@ class Model_cards extends Model_Database {
 		
 	}
 	
+	/*
+		function that checks if username and password match
+	*/
+	
 	public function confirm_username_password($user,$pass)
 	{
 		$query=db::select()->from('accounts')->execute();
@@ -185,17 +234,22 @@ class Model_cards extends Model_Database {
 		}
 	}
 	
+	/*
+		function that sends the email message for the forgot password feature
+	*/
+	
 	public function send_password($email)
 	{
 		$to = $email;
 		$from ='mycardlist.email@gmail.com';
 		$subject='Password Reset';	
 		
-		$id = $this->get_account_id($email);
+		//$id = $this->get_account_id($email);					// commented 10-16-12
+		$user_name = md5($this->get_user_name($email));			// 10-16-12 added get_username function to get username then hash it
 		$server_name = $this->get_server_name();
 		
 		
-		$link = $server_name.url::site().'accounts/change_password/'.$id;
+		$link = $server_name.url::site().'accounts/change_password/'.$user_name;
 		$message='Click the link to this account to reset your password: '.$link;
 		
 		$mailer = email::connect();
@@ -203,6 +257,7 @@ class Model_cards extends Model_Database {
 		email::send($to,$from,$subject,$message);	 
 
 	}
+	
 	
 	public function get_password($email)
 	{
@@ -213,6 +268,11 @@ class Model_cards extends Model_Database {
 			return $row['password'];
 		}
 	}
+	
+	
+	/*
+		function that checks if email exists from the database
+	*/
 	
 	public function validate_email($email)
 	{
@@ -227,6 +287,10 @@ class Model_cards extends Model_Database {
 	  }
 	}
 	
+	/*
+		function that gets secret question from the database, parameter used is email
+	*/
+	
 	public function get_secret_question($email)
 	{
 		$query=db::select('*','question_name')->from('accounts')->join('secret_question')
@@ -234,6 +298,11 @@ class Model_cards extends Model_Database {
 	  
 		return $query; 
 	}
+	
+	/*
+		function that checks if answer to secret question match the one in the database
+		parameter used is email to search the corresponding row in database
+	*/
 	
 	public function confirm_secret_question_ans($ans,$email)
 	{
@@ -250,6 +319,10 @@ class Model_cards extends Model_Database {
 		return false;
 	}
 	
+	/*
+		function that gets the id of the user where parameter email is used
+	*/
+	
 	public function get_account_id($email)
 	{
 		$query = db::select()->from('accounts')->where('email','=',$email)->execute();
@@ -259,6 +332,10 @@ class Model_cards extends Model_Database {
 		  return $row['id'];
 		}
 	}
+	
+	/*
+		function that returns the server name used by computer
+	*/
 	
 	public function get_server_name()
 	{
@@ -277,6 +354,10 @@ class Model_cards extends Model_Database {
 	
 	return $baseUrl;
 	}
+	
+	/*
+		function that validates the fields for change password feature
+	*/
 	
 	public function validate_new_password($password,$new_password,$id)
 	{
@@ -298,14 +379,19 @@ class Model_cards extends Model_Database {
 		}
 	}
 	
-	public function reset_password($id,$password)
+	/*
+		function that resets the password the password for the reset password feature
+	*/
+	
+	public function reset_password($hash,$password)
 	{
-		DB::update('accounts')->set (array('password'=>md5($password)))
-		->where('id','=',$id)->execute();
-			
-		//$type=9;
-		//$this->message($type);
+		DB::update('accounts')->set(array('password'=>md5($password)))
+		->where('username_hash','=',$hash)->execute();	
 	}
+	
+	/*
+		function that checks if user is still logged
+	*/
 	
 	public function validate_id_if_logged($id)
 	{
@@ -318,6 +404,10 @@ class Model_cards extends Model_Database {
 		  return true;
 		}
 	}
+	
+	/*
+		function for buying cards 
+	*/
 	
 	public function buy_cards($card_name,$id)
 	{
@@ -341,6 +431,24 @@ class Model_cards extends Model_Database {
 			}
 		}		
 	}
+	
+	/*
+		function used for fetching username in the database where parameter email is used
+	*/
+	
+	public function get_user_name($email)
+	{
+		$query = db::select()->from('accounts')->where('email','=',$email)->execute();
+		
+		foreach($query as $row)
+		{
+		   return $row['username'];
+		}
+	}
+	
+	/*
+		function used for message output
+	*/
 	
 	public function message($type)
 	{

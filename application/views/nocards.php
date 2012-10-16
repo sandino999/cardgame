@@ -19,7 +19,7 @@ include('header_main.php');
 	
 <?php
 
-echo 'Welcome <font color=green>'.session::instance()->get('username').'</font><br/>';
+
 
 echo '<h1> My Card List </h1>'; 
 

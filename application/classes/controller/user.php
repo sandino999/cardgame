@@ -19,6 +19,7 @@ class Controller_User extends Controller {
 	public function action_index()
 	{
 		$validate = $this->model->validate_id_if_logged($this->id);
+		
 		if($validate==false)
 		{
 			$this->request->redirect('index.php/accounts/not_logged');
@@ -28,23 +29,23 @@ class Controller_User extends Controller {
 		{
 			if($_GET['select_sort']=='')
 			{
-			$this->action_default();
+				$this->action_default();
 			}
-			elseif($_GET['select_sort']==self::STR_ASC)
+				elseif($_GET['select_sort']==self::STR_ASC)
 			{
-			$this->str_ascending();
+				$this->str_ascending();
 			}
-			elseif($_GET['select_sort']==self::STR_DESC)
+				elseif($_GET['select_sort']==self::STR_DESC)
 			{
-			$this->str_descending();
+				$this->str_descending();
 			}
-			elseif($_GET['select_sort']==self::DEF_ASC)
+				elseif($_GET['select_sort']==self::DEF_ASC)
 			{
-			$this->def_ascending();
+				$this->def_ascending();
 			}
-			elseif($_GET['select_sort']==self::DEF_DESC)
+				elseif($_GET['select_sort']==self::DEF_DESC)
 			{
-			$this->def_descending();
+				$this->def_descending();
 			} 
 		}
 		else

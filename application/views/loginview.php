@@ -25,10 +25,11 @@
 		echo form::open('accounts/login',array('method'=>'post'));
 		echo 'Username: '.form::input('txtuser').'<br/>';
 		echo 'Password: '.form::password('txtpass').'<br/>';
-		?> <input type='submit' name='btnlogin' value='Login' class='btn btn-primary'> <?php
-	
+		?> 
+		<input type='submit' name='btnlogin' value='Login' class='btn btn-primary'> <?php
 		echo form::close();
 	
+		
 		?><div style='position:relative; top:-50;height:0px;left:70'><?php
 		echo form::open('accounts/register',array('method'=>'post'));
 		?><input type='submit' name='btnregister' value='Register' class='btn btn-primary'> <?php	

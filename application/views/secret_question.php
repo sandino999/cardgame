@@ -21,8 +21,8 @@ include('header.php');
 		echo '<font color =red>'.$message.'</font><br/>';
 		foreach($secret as $row)
 		{
-		echo $row['question_name'];
-		$email = $row['email'];
+			echo $row['question_name'];
+			//$email = $row['email'];		// commented code: 10/15/12		
 		}
 
 		echo form::open('accounts/confirm_secret_question',array('method'=>'post'));

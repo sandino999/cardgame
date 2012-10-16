@@ -38,7 +38,8 @@ setlocale(LC_ALL, 'en_US.utf-8');
  * @see  http://kohanaframework.org/guide/using.autoloading
  * @see  http://php.net/spl_autoload_register
  */
-spl_autoload_register(array('Kohana', 'auto_load'));
+
+ spl_autoload_register(array('Kohana', 'auto_load'));
 
 /**
  * Enable the Kohana auto-loader for unserialization.
@@ -117,7 +118,7 @@ Kohana::modules(array(
  
 Route::set('default', '(<controller>(/<action>(/<id>)))')
 	->defaults(array(
-		'controller' => 'welcome',
+		'controller' => 'mycardlist',
 		'action'     => 'index',
 	));
 

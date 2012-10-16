@@ -123,7 +123,7 @@
 			error =1;
 			error_message = 'Enter retype password';
 			$('#return_password').html(error_message);
-		}
+		}	
 		else if(value != $('#retype').val())
 		{
 			error =1;
@@ -144,8 +144,14 @@
 
 	$("#retype").change( function() {
 		var value = $('#retype').val();
-			
-		if(value != $('#password').val())
+		
+		if($('#retype').val().length < 8)	// added code: whole if statement from 148 to 153  10/15/12
+		{
+			error =1;
+			error_message = 'retype password must be 8 characters long';
+			$('#return_retype').html(error_message);
+		}			
+		else if(value != $('#password').val())
 		{
 			error =1;
 			error_message = 'Password does not match';
@@ -154,8 +160,10 @@
 		else
 		{
 			error =0;
-			error_message = '';
+			error_message = '';					
+			error_message2 = ''								// added code 10/15/12
 			$('#return_password').html(error_message);
+			$('#return_retype').html(error_message2);		// added code 10/15/12
 		}
 	});	
 	

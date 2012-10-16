@@ -17,8 +17,7 @@ class Controller_MyCardList extends Controller {
 	public function action_index()
 	{
 		$this->model->get_server_name();
-		$this->check_if_logged();
-		
+		$this->check_if_logged();	
 	}
 	
 	public function get_server()
